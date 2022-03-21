@@ -1,0 +1,94 @@
+@charset "utf-8";
+
+/*小于1200px时*/
+@media (max-width: 1200px) {
+
+    /*书签及设置高度*/
+    .mark,
+    .set {
+        margin-top: 180px;
+    }
+}
+
+/*小于720px时*/
+@media (max-width: 720px) {
+
+    /*书签*/
+    .quick,
+    .quicks {
+        width: 23%;
+        min-width: 23%;
+        max-width: 23%;
+    }
+}
+
+/*小于512px时*/
+@media (max-width: 512px) {
+
+    /*文字大小*/
+    #time_text {
+        font-size: 2.75rem;
+    }
+
+    #day {
+        font-size: 1.05rem;
+    }
+
+    .weather {
+        font-size: 1rem;
+    }
+
+    .wd::-webkit-input-placeholder {
+        letter-spacing: 1px;
+        font-size: 0.95rem;
+    }
+
+    /*搜索引擎*/
+    .se-li {
+        width: 31.33%;
+        min-width: 31.33%;
+        max-width: 31.33%;
+    }
+
+    /*设置按钮*/
+    #menu i {
+        font-size: 1.45rem;
+    }
+
+    /*书签*/
+    .quick,
+    .quicks {
+        width: 31.33%;
+        min-width: 31.33%;
+        max-width: 31.33%;
+    }
+
+    /*壁纸设置*/
+    #wallpaper {
+        flex-wrap: wrap;
+    }
+
+    #wallpaper_text {
+        margin-top: 0px;
+    }
+
+    .form-radio {
+        margin: 0px 10px 30px 0px;
+    }
+
+    /*隐藏*/
+    .mobile {
+        display: none;
+    }
+}
+
+/* 大于568px时 */
+@media (min-width: 568px) {
+    .iziToast {
+        border-radius: 30px !important;
+    }
+
+    .iziToast-wrapper {
+        padding: 10px 0px !important;
+    }
+}

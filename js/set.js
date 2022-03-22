@@ -635,8 +635,18 @@ $(document).ready(function () {
         $(".search-engine").slideUp(160);
     });
 
+    $("#s-button").focus(function () {
+        focusWd();
+        keywordReminder();
+        $(".search-engine").slideUp(160);
+    });
+
     // 搜索框失去焦点事件
     $(".wd").blur(function () {
+        blurWd();
+    });
+
+    $("#s-button").blur(function () {
         blurWd();
     });
 

@@ -30,11 +30,25 @@ window.addEventListener('load', function () {
 
 }, false)
 
-//屏蔽浏览器默认右键
-// document.oncontextmenu = function () {
-//     undefined
-//     return false;
-// }
+//进入问候
+now = new Date(), hour = now.getHours()
+if (hour < 6) {
+    var hello = "凌晨好";
+} else if (hour < 9) {
+    var hello = "早上好";
+} else if (hour < 12) {
+    var hello = "上午好";
+} else if (hour < 14) {
+    var hello = "中午好";
+} else if (hour < 17) {
+    var hello = "下午好";
+} else if (hour < 19) {
+    var hello = "傍晚好";
+} else if (hour < 22) {
+    var hello = "晚上好";
+} else {
+    var hello = "夜深了";
+}
 
 //获取时间
 var t = null;
@@ -107,22 +121,33 @@ $(function () {
     })
 })
 
-// 检测浏览器是否支持SW
-function registerServiceWorker() {
-    // 注册 service worker
-    return navigator.serviceWorker.register('./js/sw.js').then(registration => {
-            console.log('注册成功');
-            // 返回
-            return registration;
-        })
-        .catch(err => {
-            console.error('注册失败', err);
-        });
-}
-window.onload = function () {
-    //是否支持
-    if (!('serviceWorker' in navigator)) {
-        return;
-    }
-    registerServiceWorker()
-}
+//控制台输出
+var styleTitle1 = `
+font-size: 20px;
+font-weight: 600;
+color: rgb(244,167,89);
+`
+var styleTitle2 = `
+font-size:12px;
+color: rgb(244,167,89);
+`
+var styleContent = `
+color: rgb(30,152,255);
+`
+var title1 = 'Snavigation'
+var title2 = `
+ _____ __  __  _______     ____     __
+|_   _|  \\/  |/ ____\\ \\   / /\\ \\   / /
+  | | | \\  / | (___  \\ \\_/ /  \\ \\_/ / 
+  | | | |\\/| |\\___ \\  \\   /    \\   /  
+ _| |_| |  | |____) |  | |      | |   
+|_____|_|  |_|_____/   |_|      |_|                                                     
+`
+var content = `
+版 本 号：1.0
+更新日期：2022-03-22
+
+Github:  https://github.com/imsyy/Snavigation
+`
+console.log(`%c${title1} %c${title2}
+%c${content}`, styleTitle1, styleTitle2, styleContent)

@@ -232,7 +232,7 @@ function setBgImgInit() {
             pictures[7] = './img/background8.webp';
             pictures[8] = './img/background9.webp';
             pictures[9] = './img/background10.webp';
-            var rd = Math.floor(Math.random()*10);
+            var rd = Math.floor(Math.random() * 10);
             $('#bg').attr('src', pictures[rd]) //随机默认壁纸
             break;
         case "2":
@@ -698,20 +698,16 @@ $(document).ready(function () {
     });
 
     // 快捷方式添加按钮点击
-    $("#set-quick").click(function (event) {
-        if ($(this).attr("class") === "on") {
-            closeSet();
-        } else {
-            openSet();
+    $("#set-quick").click(function () {
+        openSet();
 
-            // 设置内容加载
-            setSeInit(); //搜索引擎设置
-            setQuickInit(); //快捷方式设置
+        // 设置内容加载
+        setSeInit(); //搜索引擎设置
+        setQuickInit(); //快捷方式设置
 
-            //添加快捷方式
-            $("#set-quick-menu").trigger('click');
-            $(".set_quick_list_add").trigger('click');
-        }
+        //添加快捷方式
+        $("#set-quick-menu").trigger('click');
+        $(".set_quick_list_add").trigger('click');
     });
 
     // 修改默认搜索引擎

@@ -107,18 +107,22 @@ $(function () {
     })
 })
 
-//监听网页宽度
-// window.addEventListener('load', function () {
-//     if (window.innerWidth <= 512) {
-//         $('.wd').attr('placeholder', '搜索');
-//     } else {
-//         $('.wd').attr('placeholder', '想要搜点什么');
-//     }
-//     window.addEventListener('resize', function () {
-//         if (window.innerWidth <= 512) {
-//             $('.wd').attr('placeholder', '搜索');
-//         } else {
-//             $('.wd').attr('placeholder', '想要搜点什么');
-//         }
-//     })
-// })
+// 检测浏览器是否支持SW
+function registerServiceWorker() {
+    // 注册 service worker
+    return navigator.serviceWorker.register('./js/sw.js').then(registration => {
+            console.log('注册成功');
+            // 返回
+            return registration;
+        })
+        .catch(err => {
+            console.error('注册失败', err);
+        });
+}
+window.onload = function () {
+    //是否支持
+    if (!('serviceWorker' in navigator)) {
+        return;
+    }
+    registerServiceWorker()
+}

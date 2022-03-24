@@ -100,52 +100,26 @@ var quick_list_preinstall = {
     '1': {
         title: "哔哩哔哩",
         url: "https://www.bilibili.com/",
-        explain: "哔哩哔哩 (゜-゜)つロ 干杯~",
     },
     '2': {
         title: "GitHub",
         url: "https://github.com/",
-        explain: "GitHub",
     },
     '3': {
         title: "V2EX",
         url: "https://www.v2ex.com/",
-        explain: "V2EX",
     },
     '4': {
         title: "Steam",
         url: "https://store.steampowered.com/",
-        explain: "Steam",
     },
     '5': {
         title: "Github",
         url: "https://github.com/",
-        explain: "GitHub",
     },
     '6': {
         title: "Github",
         url: "https://github.com/",
-        explain: "GitHub",
-    },
-    '7': {
-        title: "Github",
-        url: "https://github.com/",
-        explain: "GitHub",
-    },
-    '8': {
-        title: "Github",
-        url: "https://github.com/",
-        explain: "GitHub",
-    },
-    '9': {
-        title: "Github",
-        url: "https://github.com/",
-        explain: "GitHub",
-    },
-    '10': {
-        title: "Github",
-        url: "https://github.com/",
-        explain: "GitHub",
     }
 };
 
@@ -366,7 +340,6 @@ function seList() {
     var html = "";
     var se_list = getSeList();
     for (var i in se_list) {
-        //html += "<div class='se-li' data-url='" + se_list[i]["url"] + "' data-name='" + se_list[i]["name"] + "' data-img='" + se_list[i]["img"] + "'><img src='" + se_list[i]["img"] + "'>" + se_list[i]["title"] + "</div>";
         html += "<div class='se-li' data-url='" + se_list[i]["url"] + "' data-name='" + se_list[i]["name"] + "' data-icon='" + se_list[i]["icon"] + "'><a class='se-li-text'><i id='icon-sou-list' class=' " + se_list[i]["icon"] + " '></i><span>" + se_list[i]["title"] + "</span></a></div>";
     }
     $(".search-engine-list").html(html);
@@ -424,7 +397,7 @@ function quickData() {
     var html = "";
     var quick_list = getQuickList();
     for (var i in quick_list) {
-        html += "<div class='quick' title='" + quick_list[i]['explain'] + "'>\
+        html += "<div class='quick'>\
                         <a href='" + quick_list[i]['url'] + "' target='_blank'>\
                             " + quick_list[i]['title'] + "\
                         </a>\
@@ -635,21 +608,11 @@ $(document).ready(function () {
         $(".search-engine").slideUp(160);
     });
 
-    $("#s-button").focus(function () {
-        focusWd();
-        keywordReminder();
-        $(".search-engine").slideUp(160);
-    });
-
     // 搜索框失去焦点事件
     $(".wd").blur(function () {
         blurWd();
     });
-
-    $("#s-button").blur(function () {
-        blurWd();
-    });
-
+    
     // 自动提示( 调用百度 api ）
     $('.wd').keyup(function (event) {
         var key = event.keyCode;

@@ -250,14 +250,11 @@ img.error {
 .sou form .s {
     width: 40px;
     height: 40px;
+    display: flex;
     padding: 10px;
     cursor: pointer;
-}
-
-.sou form .se {
-    display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
 #icon-se,
@@ -278,7 +275,6 @@ img.error {
 }
 
 .sou-button {
-    padding: 10px;
     transition: 0.3s;
     border-radius: 30px 0px 0px 30px;
 }

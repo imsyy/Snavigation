@@ -53,7 +53,6 @@
     </div>
     <!-- 主体内容 -->
     <section id="section" class="section">
-        <!-- 搜索框 -->
         <div id="content">
             <div class="con">
                 <!-- 时间天气 -->
@@ -74,14 +73,14 @@
                             <div class="se" title="点击切换搜索引擎">
                                 <i id="icon-se" class="iconfont icon-baidu"></i>
                             </div>
-                            <input class="wd" type="text" name="wd" placeholder="想要搜点什么" onfocus="this.placeholder=''"
-                                onblur="this.placeholder='想要搜点什么'" autocomplete="off">
+                            <input class="wd" type="text" name="wd" placeholder="想要搜点什么" autocomplete="off">
                             <div class="sou-button">
-                                <button class="s" id="s-button">
+                                <div class="s" id="s-button">
                                     <i id="icon-sou" class="iconfont icon-sousuo"></i>
-                                </button>
+                                </div>
                             </div>
                         </div>
+                        <input type="submit" id="search-submit" style="display: none;">
                     </form>
                     <div id="keywords" style="display: none;"></div>
                     <div class="search-engine" style="display: none;">
@@ -503,7 +502,6 @@
                 </div>
             </div>
         </div>
-        <!-- 主体内容结束 -->
         <!-- 版权信息 -->
         <div class="foot">
             <div class="power">Copyright&nbsp;&copy;&nbsp;2020
@@ -515,6 +513,7 @@
             </div>
         </div>
     </section>
+    <!-- 主体内容结束 -->
     <!-- noscript -->
     <noscript>
         <div class="noscript fixed-top">请开启 JavaScript</div>

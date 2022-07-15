@@ -1,14 +1,14 @@
 @font-face {
   font-family: "MiSans";
-  src: url('../font/MiSans-Regular.woff') format('woff');
+  src: url('../font/MiSans-Regular.subset.woff2') format('woff');
 }
 
 @font-face {
   font-family: "iconfont";
   /* Project id 3222465 */
-  src: url('//at.alicdn.com/t/font_3222465_kuwc8yy7j9g.woff2?t=1647790391080') format('woff2'),
-    url('//at.alicdn.com/t/font_3222465_kuwc8yy7j9g.woff?t=1647790391080') format('woff'),
-    url('//at.alicdn.com/t/font_3222465_kuwc8yy7j9g.ttf?t=1647790391080') format('truetype');
+  src: url('../font/iconfont.woff2') format('woff2'),
+    url('../font/iconfont.woff') format('woff'),
+    url('../font/iconfont.ttf') format('truetype');
 }
 
 .iconfont {

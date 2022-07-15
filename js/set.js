@@ -98,28 +98,52 @@ var se_list_preinstall = {
 // 默认快捷方式
 var quick_list_preinstall = {
     '1': {
-        title: "哔哩哔哩",
-        url: "https://www.bilibili.com/",
+        title: "Vercel",
+        url: "https://vercel.com/",
     },
     '2': {
         title: "GitHub",
         url: "https://github.com/",
     },
     '3': {
-        title: "V2EX",
-        url: "https://www.v2ex.com/",
+        title: "Cloudflare",
+        url: "https://dash.cloudflare.com/",
     },
     '4': {
-        title: "Steam",
-        url: "https://store.steampowered.com/",
+        title: "W3school",
+        url: "https://www.w3school.com.cn/",
     },
     '5': {
-        title: "Github",
-        url: "https://github.com/",
+        title: "腾讯云",
+        url: "https://console.cloud.tencent.com/",
     },
     '6': {
-        title: "Github",
-        url: "https://github.com/",
+        title: "阿里云",
+        url: "https://console.aliyun.com/",
+    },
+    '7': {
+        title: "百度网盘",
+        url: "https://pan.baidu.com/",
+    },
+    '8': {
+        title: "阿里云盘",
+        url: "https://www.aliyundrive.com/drive/",
+    },
+    '9': {
+        title: "Office",
+        url: "https://www.office.com/",
+    },
+    '10': {
+        title: "又拍云",
+        url: "https://console.upyun.com/",
+    },
+    '11': {
+        title: "CSDN",
+        url: "https://www.csdn.net/",
+    },
+    '12': {
+        title: "哔哩哔哩",
+        url: "https://www.bilibili.com/",
     }
 };
 
@@ -284,9 +308,11 @@ function blurWd() {
     $(".tool-all").css({
         "transform": "translateY(-120%)"
     });
+    //隐藏搜索建议
+    $("#keywords").hide();
 }
 
-// 关键字提示
+// 搜索建议提示
 function keywordReminder() {
     var keyword = $(".wd").val();
     if (keyword != "") {
@@ -622,7 +648,7 @@ $(document).ready(function () {
         keywordReminder();
     });
 
-    // 点击自动提示的关键字
+    // 点击自动提示的搜索建议
     $("#keywords").on("click", "div", function () {
         var wd = $(this).text();
         $(".wd").val(wd);
@@ -997,9 +1023,9 @@ $(document).ready(function () {
                         timeout: 2000,
                         message: '重置成功'
                     });
-                    setTimeout(function () {
-                        window.location.reload()
-                    }, 1000);
+                    // setTimeout(function () {
+                    //     window.location.reload()
+                    // }, 1000);
                 }, true],
                 ['<button>取消</button>', function (instance, toast) {
                     instance.hide({

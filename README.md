@@ -3,14 +3,14 @@
 一个简约的起始页
 </p>
 
-![Snavigation](https://img.imsyy.top/other/Snavigation.png)
+![Snavigation.png](https://s2.loli.net/2022/07/15/FE6U2BJCynHDep8.jpg)
 
 >尚未完成
 
 ### Demo
 >由于 CDN 缓存原因，查看最新效果可能需要 `Ctrl` + `F5` 强制刷新浏览器缓存
 
-- [Snavigation](https://nav.imsyy.top)
+- [Snavigation](https://snavigation.vercel.app/)
 
 ### 功能
 

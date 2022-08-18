@@ -142,6 +142,7 @@ img.error {
     flex-direction: column;
     align-items: center;
     transform: translateY(-120%);
+    z-index: 1;
 }
 
 .time {
@@ -1003,4 +1004,11 @@ input[type="radio"]:checked+label {
 .from_items input::selection {
     background: #ffffff60;
     color: #ffffffb3;
+}
+
+/*关闭块*/
+.close_sou {
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }

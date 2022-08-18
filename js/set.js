@@ -204,7 +204,6 @@ function setBgImg(bg_img) {
 }
 
 // 设置-壁纸
-//$('#bg').attr('src','https://api.dujin.org/bing/1920.php')
 function setBgImgInit() {
     var bg_img = getBgImg();
     $("input[name='wallpaper-type'][value=" + bg_img["type"] + "]").click();
@@ -234,13 +233,13 @@ function setBgImgInit() {
             $('#bg').attr('src', pictures[rd]) //随机默认壁纸
             break;
         case "2":
-            $('#bg').attr('src', 'https://api.dujin.org/bing/1920.php') //必应每日
+            $('#bg').attr('src', 'https://api.htloli.com/api/bing?authorization=qbRDesfKYzDUDWmy4XAWF6FRuz2jqRNG&encode=image'); //必应每日
             break;
         case "3":
-            $('#bg').attr('src', 'https://api.ixiaowai.cn/gqapi/gqapi.php') //随机风景
+            $('#bg').attr('src', 'https://api.htloli.com/api/rand_image?authorization=qbRDesfKYzDUDWmy4XAWF6FRuz2jqRNG&type=9&source=360') //随机风景
             break;
         case "4":
-            $('#bg').attr('src', 'https://api.ixiaowai.cn/api/api.php') //随机二次元
+            $('#bg').attr('src', 'https://api.htloli.com/api/rand_image?authorization=qbRDesfKYzDUDWmy4XAWF6FRuz2jqRNG') //随机二次元
             break;
         case "5":
             $('#bg').attr('src', bg_img["path"]) //自定义
@@ -276,6 +275,10 @@ function focusWd() {
     $(".tool-all").css({
         "transform": "translateY(-140%)"
     });
+    //搜索引擎选择上移
+    $(".search-engine").css({
+        "transform": "translateY(-30%)"
+    });
 }
 
 // 搜索框取消高亮
@@ -310,6 +313,10 @@ function blurWd() {
     });
     //隐藏搜索建议
     $("#keywords").hide();
+    //搜索引擎选择恢复
+    $(".search-engine").css({
+        "transform": "translateY(0)"
+    });
 }
 
 // 搜索建议提示
@@ -627,17 +634,33 @@ $(document).ready(function () {
         $(".search-engine").slideUp(160);
     });
 
-    // 搜索框获得焦点事件
-    $(".wd").focus(function () {
+    // 搜索框点击事件
+    $(document).on('click', '.sou', function(event) {
+        focusWd();
+        $(".search-engine").slideUp(160);
+    })
+    
+    $(document).on('click', '.wd', function(event) {
         focusWd();
         keywordReminder();
         $(".search-engine").slideUp(160);
-    });
+    })
 
-    // 搜索框失去焦点事件
-    $(".wd").blur(function () {
+    // 点击其他区域关闭事件
+    $(document).on('click', '.close_sou', function() {
         blurWd();
-    });
+        closeSet();
+    })
+    
+    // 点击搜索引擎时隐藏自动提示
+    $(document).on('click', '.se', function() {
+        $('#keywords').toggle();
+    })
+    
+    // 恢复自动提示
+    $(document).on('click', '.se-li', function() {
+        $('#keywords').show();
+    })
     
     // 自动提示( 调用百度 api ）
     $('.wd').keyup(function (event) {
@@ -649,7 +672,7 @@ $(document).ready(function () {
     });
 
     // 点击自动提示的搜索建议
-    $("#keywords").on("click", "div", function () {
+    $("#keywords").on("click", ".wd", function () {
         var wd = $(this).text();
         $(".wd").val(wd);
         $(".search").submit();
@@ -684,7 +707,7 @@ $(document).ready(function () {
     // });
 
     // 菜单点击
-    $("#menu").click(function (event) {
+    $(document).on('click', '#menu', function(event){
         if ($(this).attr("class") === "on") {
             closeSet();
         } else {
@@ -697,7 +720,7 @@ $(document).ready(function () {
     });
 
     // 快捷方式添加按钮点击
-    $("#set-quick").click(function () {
+    $(document).on('click', '#set-quick', function(){
         openSet();
 
         // 设置内容加载
@@ -741,7 +764,7 @@ $(document).ready(function () {
     });
 
     // 搜索引擎添加
-    $(".set_se_list_add").click(function () {
+    $(document).on('click', '.set_se_list_add', function(){
         $(".se_add_content input").val("");
 
         hideSe();
@@ -749,7 +772,7 @@ $(document).ready(function () {
     });
 
     // 搜索引擎保存
-    $(".se_add_save").click(function () {
+    $(document).on('click', '.se_add_save', function(){
         var key_inhere = $(".se_add_content input[name='key_inhere']").val();
         var key = $(".se_add_content input[name='key']").val();
         var title = $(".se_add_content input[name='title']").val();
@@ -825,7 +848,7 @@ $(document).ready(function () {
     });
 
     // 关闭表单
-    $(".se_add_cancel").click(function () {
+    $(document).on('click', '.se_add_cancel', function(){
         $(".se_add_content").hide();
 
         //显示列表
@@ -886,7 +909,7 @@ $(document).ready(function () {
     });
 
     // 恢复预设搜索引擎
-    $(".set_se_list_preinstall").click(function () {
+    $(document).on('click', '.set_se_list_preinstall', function(){
         iziToast.show({
             timeout: 8000,
             message: '现有搜索引擎数据将被清空',
@@ -917,7 +940,7 @@ $(document).ready(function () {
     });
 
     // 设置-快捷方式添加
-    $(".set_quick_list_add").click(function () {
+    $(document).on('click', '.set_quick_list_add', function(){
         $(".quick_add_content input").val("");
         $(".quick_add_content").show();
 
@@ -926,7 +949,7 @@ $(document).ready(function () {
     });
 
     // 设置-快捷方式保存
-    $(".quick_add_save").click(function () {
+    $(document).on('click', '.quick_add_save', function(){
         var key_inhere = $(".quick_add_content input[name='key_inhere']").val();
         var key = $(".quick_add_content input[name='key']").val();
         var title = $(".quick_add_content input[name='title']").val();

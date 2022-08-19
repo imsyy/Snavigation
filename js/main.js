@@ -149,6 +149,12 @@ $(".sou-button").click(function () {
     }
 });
 
+$(window).mousedown(function (event) {
+    if (event.button == 1) {
+        $("#time_text").click();
+    }
+});
+
 //控制台输出
 var styleTitle1 = `
 font-size: 20px;

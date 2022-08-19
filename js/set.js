@@ -276,6 +276,10 @@ function focusWd() {
     $(".tool-all").css({
         "transform": "translateY(-140%)"
     });
+    //搜索引擎选择上移
+    $(".search-engine").css({
+        "transform": "translateY(-30%)"
+    });
 }
 
 // 搜索框取消高亮
@@ -310,6 +314,10 @@ function blurWd() {
     });
     //隐藏搜索建议
     $("#keywords").hide();
+    //搜索引擎选择恢复
+    $(".search-engine").css({
+        "transform": "translateY(0)"
+    });
 }
 
 // 搜索建议提示
@@ -627,17 +635,44 @@ $(document).ready(function () {
         $(".search-engine").slideUp(160);
     });
 
-    // 搜索框获得焦点事件
-    $(".wd").focus(function () {
-        focusWd();
-        keywordReminder();
+    // 搜索引擎列表点击
+    $(".search-engine-list").on("click", ".se-li", function () {
+        var url = $(this).attr('data-url');
+        var name = $(this).attr('data-name');
+        var icon = $(this).attr('data-icon');
+        $(".search").attr("action", url);
+        $(".wd").attr("name", name);
+        $("#icon-se").attr("class", icon);
         $(".search-engine").slideUp(160);
     });
 
-    // 搜索框失去焦点事件
-    $(".wd").blur(function () {
+    // 搜索框点击事件
+    $(document).on('click', '.sou', function(event) {
+        focusWd();
+        $(".search-engine").slideUp(160);
+    })
+    
+    $(document).on('click', '.wd', function(event) {
+        focusWd();
+        keywordReminder();
+        $(".search-engine").slideUp(160);
+    })
+
+    // 点击其他区域关闭事件
+    $(document).on('click', '.close_sou', function() {
         blurWd();
-    });
+        closeSet();
+    })
+    
+    // 点击搜索引擎时隐藏自动提示
+    $(document).on('click', '.se', function() {
+        $('#keywords').toggle();
+    })
+    
+    // 恢复自动提示
+    $(document).on('click', '.se-li', function() {
+        $('#keywords').show();
+    })
     
     // 自动提示( 调用百度 api ）
     $('.wd').keyup(function (event) {
@@ -649,7 +684,7 @@ $(document).ready(function () {
     });
 
     // 点击自动提示的搜索建议
-    $("#keywords").on("click", "div", function () {
+    $("#keywords").on("click", ".wd", function () {
         var wd = $(this).text();
         $(".wd").val(wd);
         $(".search").submit();

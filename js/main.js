@@ -143,7 +143,9 @@ $(window).keydown(function (e) {
 //点击搜索按钮
 $(".sou-button").click(function () {
     if ($("body").attr("class") === "onsearch") {
-        $("#search-submit").click();
+        if ($(".wd").val() != "") {
+            $("#search-submit").click();
+        }
     }
 });
 

@@ -134,6 +134,46 @@ img.error {
     transition: 0.3s;
 }
 
+/*
+搜索框点击后更改样式
+*/
+
+/*搜索框*/
+.onsearch .all-search {
+    background-color: var(--main-text-form-hover-color);
+    transform: translateY(-140%);
+    transition: ease 0.3s !important;
+}
+
+/*背景模糊*/
+.onsearch #bg {
+    transform: scale(1.08) !important;
+    filter: blur(10px) !important;
+    transition: ease 0.3s !important;
+}
+
+/*搜索引擎按钮*/
+.onsearch #icon-se {
+    color: var(--main-text-form-color) !important;
+    transition: ease 0.5s;
+}
+
+/*搜索按钮*/
+.onsearch #icon-sou {
+    color: var(--main-text-form-color) !important;
+    transition: ease 0.5s;
+}
+
+/*时间上移*/
+.onsearch .tool-all {
+    transform: translateY(-140%) !important;
+}
+
+/*搜索引擎选择上移*/
+.onsearch .search-engine {
+    transform: translateY(-38%) !important;
+}
+
 
 /*时间*/
 .tool-all {
@@ -372,7 +412,7 @@ img.error {
 #keywords {
     position: absolute;
     width: 100%;
-    top: 46%;
+    top: 46.5%;
     font-size: small;
     color: var(--main-text-color);
     background-color: var(--main-background-color);
@@ -405,7 +445,8 @@ img.error {
     font-size: small;
 }
 
-.keyword:hover {
+.keyword:hover,
+.keyword.choose {
     cursor: pointer;
     /* font-weight: bold; */
     transition: 0.3s;

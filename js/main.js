@@ -95,25 +95,7 @@ fetch('https://yiketianqi.com/api?unescape=1&version=v6&appid=43986679&appsecret
         $('#tem2').text(data.tem2)
     })
     .catch(console.error)
-
-//火狐浏览器独立样式
-if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
-    var head = document.getElementsByTagName('head')[0];
-    var link = document.createElement('link');
-    link.href = './css/firefox.css';
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    head.appendChild(link);
-    window.addEventListener('load', function () {
-        setTimeout(function () {
-            iziToast.show({
-                timeout: 8000,
-                message: '您正在使用火狐浏览器，部分功能可能不支持'
-            });
-        }, 3800);
-    }, false)
-}
-
+    
 //Tab书签页
 $(function () {
     $(".mark .tab .tab-item").click(function () {
@@ -149,6 +131,7 @@ $(".sou-button").click(function () {
     }
 });
 
+//鼠标中键点击事件
 $(window).mousedown(function (event) {
     if (event.button == 1) {
         $("#time_text").click();

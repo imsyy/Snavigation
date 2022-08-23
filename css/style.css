@@ -32,6 +32,7 @@ body {
     -webkit-tap-highlight-color: transparent;
     -webkit-user-select: none;
     user-select: none;
+    font-family: 'MiSans', sans-serif;
 }
 
 *,
@@ -41,7 +42,6 @@ p {
     transition: 0.3s;
     color: var(--main-text-color);
     user-select: none;
-    font-family: 'MiSans', sans-serif;
 }
 
 section {

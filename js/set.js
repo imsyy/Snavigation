@@ -487,7 +487,7 @@ function closeBox() {
     });
     //时间下移
     $(".tool-all").css({
-        "transform": 'translateY(-110%)'
+        "transform": 'translateY(-120%)'
     });
     //背景模糊
     $('#bg').css({

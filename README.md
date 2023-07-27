@@ -5,12 +5,13 @@
 
 ![Snavigation.png](https://s2.loli.net/2022/07/15/FE6U2BJCynHDep8.jpg)
 
->尚未完成
+> 重构中，尚未完成
 
 ### Demo
->由于 CDN 缓存原因，查看最新效果可能需要 `Ctrl` + `F5` 强制刷新浏览器缓存
+> 由于 `CDN` 缓存原因，查看最新效果可能需要 `Ctrl` + `F5` 强制刷新浏览器缓存
 
-- [Snavigation](https://snavigation.vercel.app/)
+- [Snavigation](https://nav.imsyy.top)
+- [Snavigation Dev](https://snavigation.vercel.app)
 
 ### 功能
 
@@ -23,22 +24,50 @@
 - [x] 移动端适配
 * [ ] 还没想好呢
 
-### 插件
+### 部署
 
-* [iziToast](https://izitoast.marcelodolza.com/)
-* [Iconfont](https://www.iconfont.cn/)
-* [jQuery](https://jquery.com/)
+* **安装** [node.js](https://nodejs.org/zh-cn/) **环境**
+
+  > node > 16.16.0  
+  > npm > 8.15.0
+  
+* 然后以 **管理员权限** 运行 `cmd` 终端，并 `cd` 到 项目根目录
+* 在 `终端` 中输入：
+
+```bash
+# 安装 pnpm
+npm install -g pnpm
+
+# 安装依赖
+pnpm install
+
+# 开发
+pnpm dev
+
+# 构建
+pnpm build
+```
+> 构建完成后，静态资源会在 **`dist` 目录** 中生成，可将 **`dist` 文件夹下的文件**上传至服务器，
+> 也可使用 [Vercel](https://vercel.com/) 或 [Cloudflare Pages](https://pages.cloudflare.com/) 等托管平台一键自动部署
+
+
+### 技术栈
+
+* [Vue](https://cn.vuejs.org/)
+* [Vite](https://vitejs.cn/vite3-cn/)
+* [Pinia](https://pinia.vuejs.org/zh/)
+* [iconfont](https://www.iconfont.cn/)
 
 ### API
 
 * [小歪 API](https://api.ixiaowai.cn/)
-* [天气 API](https://www.tianqiapi.com/)
+* [缙哥哥 API](https://www.dujin.org/3618.html)
+* [Hitokoto 一言](https://hitokoto.cn/)
 
 ### 鸣谢
 
-本站部分内容参考自
+本站部分样式及功能参考自
 
 * [青柠起始页](https://limestart.cn/)
-* [sou2](https://github.com/yeetime/sou2/)
 
 <a title="SSL" target="_blank" href="https://myssl.com/seal/detail?domain=blog.imsyy.top"><img src="https://img.shields.io/badge/MySSL-安全认证-brightgreen"></a>&nbsp;<a title="CDN" target="_blank" href="https://cdnjs.com/"><img src="https://img.shields.io/badge/CDN-Cloudflare-blue"></a>&nbsp;<a title="Copyright" target="_blank" href="https://imsyy.top/"><img src="https://img.shields.io/badge/Copyright%20%C2%A9%202020--2022-%E7%84%A1%E5%90%8D-red"></a>

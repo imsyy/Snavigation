@@ -18,6 +18,9 @@ const useSetDataStore = defineStore("setData", {
       showSeconds: false,
       // 是否显示搜索建议
       showSuggestions: true,
+      // 跳转方式
+      // open 当前页面 / href 新标签页
+      urlJumpType: "href",
     };
   },
   // 开启数据持久化

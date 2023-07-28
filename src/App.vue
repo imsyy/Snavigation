@@ -1,5 +1,7 @@
 <template>
+  <!-- 壁纸 -->
   <Cover />
+  <!-- 主界面 -->
   <Transition name="fade" mode="out-in">
     <main v-if="status.imgLoadStatus" id="main" @click="mainClick">
       <WeatherTime />

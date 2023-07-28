@@ -15,21 +15,27 @@
       </div>
       <input
         class="input"
+        id="main-input"
         ref="searchInputRef"
         type="text"
         label="search"
         title="请输入搜索内容"
+        autocomplete="false"
         :placeholder="inputTip"
         v-model="inputValue"
         @focus="status.setSiteStatus('focus')"
-        @keydown="pressKeyboard"
+        @keydown.stop="pressKeyboard"
       />
-      <div class="go" title="搜索" @click="toSearch">
+      <div class="go" title="搜索" @click="toSearch(inputValue)">
         <SvgIcon iconName="icon-search" className="search" />
       </div>
     </div>
     <!-- 搜索建议 -->
-    <SearchSuggestions ref="searchSuggestionsRef" :keyWord="inputValue" />
+    <SearchSuggestions
+      ref="searchSuggestionsRef"
+      :keyWord="inputValue"
+      @toSearch="toSearch"
+    />
   </div>
 </template>
 
@@ -56,14 +62,48 @@ const searchSuggestionsRef = ref(null);
 // 关闭搜索框
 const closeSearchInput = () => {
   status.setSiteStatus("normal");
+  searchInputRef.value?.blur();
   inputValue.value = "";
 };
 
 // 前往搜索
-const toSearch = () => {
-  const keywords = inputValue.value?.trim();
-  if (keywords) {
-    console.log("前往搜索：" + keywords);
+const toSearch = (val, type = 1) => {
+  const searchValue = val?.trim();
+  // 定义跳转方法
+  const jumpLink = (url) => {
+    if (set.urlJumpType === "open") {
+      window.location.href = url;
+    } else if (set.urlJumpType === "href") {
+      window.open(url, "_blank");
+    }
+  };
+  // 是否为空
+  if (searchValue) {
+    console.log("前往搜索：" + searchValue, type);
+    // type
+    // 1 默认 / 2 快捷翻译 / 3 电子邮件 / 4 直接访问
+    // 切换搜索引擎还没写，先这样
+    switch (type) {
+      case 1:
+        jumpLink(`https://www.bing.com/search?q=${searchValue}`);
+        break;
+      case 2:
+        jumpLink(`https://fanyi.baidu.com/#en/zh/${searchValue}`);
+        break;
+      case 3:
+        jumpLink(`mailto:${searchValue}`);
+        break;
+      case 4:
+        const urlRegex = /^(https?:\/\/)/i;
+        const url = urlRegex.test(searchValue)
+          ? searchValue
+          : `//${searchValue}`;
+        jumpLink(url);
+        break;
+      default:
+        break;
+    }
+    closeSearchInput();
   } else {
     status.setSiteStatus("focus");
     searchInputRef.value?.focus();
@@ -95,7 +135,7 @@ const pressKeyboard = (event) => {
   // 13 回车
   if (keyCode === 13) toSearch();
   // 子组件事件
-  searchSuggestionsRef.value?.keyboardEvents(keyCode);
+  searchSuggestionsRef.value?.keyboardEvents(keyCode, event);
 };
 
 onMounted(() => {

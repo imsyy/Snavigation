@@ -1,5 +1,5 @@
 import axios from "@/utils/request";
-import jsonpAdapter from "axios-jsonp";
+import fetchJsonp from "fetch-jsonp";
 
 /**
  * 获取天气
@@ -19,12 +19,16 @@ export const getWeather = () => {
  */
 export const getSearchSuggestions = async (keyWord) => {
   try {
-    const response = await axios({
-      url: `https://suggestion.baidu.com/su?wd=${keyWord}&cb=json`,
-      adapter: jsonpAdapter,
-      callbackParamName: "cb",
-    });
-    return response.s;
+    const encodedKeyword = encodeURIComponent(keyWord);
+    const response = await fetchJsonp(
+      `https://suggestion.baidu.com/su?wd=${encodedKeyword}&cb=json`,
+      {
+        // 回调参数
+        jsonpCallback: "cb",
+      }
+    );
+    const data = await response.json();
+    return data.s;
   } catch (error) {
     console.error("处理搜索建议发生错误：", error);
     return null;

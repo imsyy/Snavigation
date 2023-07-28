@@ -8,9 +8,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
-  axios-jsonp:
-    specifier: ^1.0.4
-    version: 1.0.4
+  fetch-jsonp:
+    specifier: ^1.3.0
+    version: 1.3.0
   pinia:
     specifier: ^2.1.4
     version: 2.1.4(vue@3.3.4)
@@ -403,10 +403,6 @@ packages:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
     dev: false
 
-  /axios-jsonp@1.0.4:
-    resolution: {integrity: sha512-KI5Fc4ery6DR+oneXG09hPZfGuNUW8Lblhe750h53Z0Eh5MRsrHn49YitDU4RsMk0HV+12zcvL2Q51QkOLGdIQ==}
-    dev: false
-
   /axios@1.4.0:
     resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
     dependencies:
@@ -496,6 +492,10 @@ packages:
 
   /estree-walker@2.0.2:
     resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
+
+  /fetch-jsonp@1.3.0:
+    resolution: {integrity: sha512-hxCYGvmANEmpkHpeWY8Kawfa5Z1t2csTpIClIDG/0S92eALWHRU1RnGaj86Tf5Cc0QF+afSa4SQ4pFB2rFM5QA==}
+    dev: false
 
   /fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}

@@ -46,7 +46,7 @@ body {
 
 .fadeUp-enter-active,
 .fadeUp-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease-in-out;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .fadeUp-enter-from,

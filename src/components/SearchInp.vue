@@ -31,8 +31,8 @@
       </div>
     </div>
     <!-- 搜索建议 -->
-    <SearchSuggestions
-      ref="searchSuggestionsRef"
+    <Suggestions
+      ref="suggestionsRef"
       :keyWord="inputValue"
       @toSearch="toSearch"
     />
@@ -42,7 +42,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { statusStore, setStore } from "@/stores";
-import SearchSuggestions from "@/components/SearchSuggestions.vue";
+import Suggestions from "@/components/Suggestions.vue";
 
 const set = setStore();
 const status = statusStore();
@@ -57,7 +57,7 @@ const inputClickable = ref(true);
 const inputValue = ref("");
 
 // 搜索建议子组件
-const searchSuggestionsRef = ref(null);
+const suggestionsRef = ref(null);
 
 // 关闭搜索框
 const closeSearchInput = () => {
@@ -135,7 +135,7 @@ const pressKeyboard = (event) => {
   // 13 回车
   if (keyCode === 13) toSearch();
   // 子组件事件
-  searchSuggestionsRef.value?.keyboardEvents(keyCode, event);
+  suggestionsRef.value?.keyboardEvents(keyCode, event);
 };
 
 onMounted(() => {

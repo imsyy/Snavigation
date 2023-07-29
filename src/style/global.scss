@@ -44,15 +44,15 @@ body {
   opacity: 0;
 }
 
-.fadeUp-enter-active,
-.fadeUp-leave-active {
+.fadeDown-enter-active,
+.fadeDown-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.fadeUp-enter-from,
-.fadeUp-leave-to {
+.fadeDown-enter-from,
+.fadeDown-leave-to {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(-10px);
 }
 
 .show-enter-active,

@@ -11,7 +11,7 @@
 > 由于 `CDN` 缓存原因，查看最新效果可能需要 `Ctrl` + `F5` 强制刷新浏览器缓存
 
 - [Snavigation](https://nav.imsyy.top)
-- [Snavigation Dev](https://snavigation.vercel.app)
+- [Snavigation Dev](https://snavigation-git-dev-imsyy.vercel.app/)
 
 ### 功能
 

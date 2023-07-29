@@ -1,20 +1,65 @@
 <template>
-  <Transition name="fadeUp" mode="out-in">
+  <Transition name="fadeDown" mode="out-in">
     <div
       v-if="
         set.showSuggestions &&
         status.siteStatus === 'focus' &&
         searchKeyword !== null
       "
-      class="search-suggestions"
-      :style="{
-        height: suggestionsHeights !== 0 ? `${suggestionsHeights}px` : 'auto',
-      }"
+      class="suggestions"
+      :style="{ height: `${suggestionsHeights}px` }"
     >
-      <!-- 搜索建议 -->
-      <Transition name="fade" mode="out-in">
+      <!-- 快捷操作 -->
+      <Transition
+        name="fade"
+        mode="out-in"
+        @after-enter="changeSuggestionsHeights"
+        @after-leave="changeSuggestionsHeights"
+      >
         <div
-          v-show="
+          v-if="searchKeyword !== null"
+          class="special-result"
+          ref="specialallResultsRef"
+        >
+          <!-- 快捷翻译 -->
+          <div
+            v-if="searchKeywordType === 'text'"
+            class="s-result"
+            @click="toSearch(keyWord, 2)"
+          >
+            <SvgIcon iconName="icon-translation" />
+            <span class="text">快捷翻译：{{ keyWord }}</span>
+          </div>
+          <!-- 直接访问 -->
+          <div
+            v-if="searchKeywordType !== 'text'"
+            class="s-result"
+            @click="
+              toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)
+            "
+          >
+            <SvgIcon
+              :iconName="`icon-${
+                searchKeywordType === 'email' ? 'email' : 'link'
+              }`"
+            />
+            <span class="text">
+              {{
+                searchKeywordType === "email" ? "发送邮件至" : "直接访问"
+              }}：{{ searchKeyword }}
+            </span>
+          </div>
+        </div>
+      </Transition>
+      <!-- 搜索建议 -->
+      <Transition
+        name="fade"
+        mode="out-in"
+        @after-enter="changeSuggestionsHeights"
+        @after-leave="changeSuggestionsHeights"
+      >
+        <div
+          v-if="
             searchKeyword !== null &&
             searchKeywordType === 'text' &&
             searchSuggestionsData[0]
@@ -22,12 +67,6 @@
           class="all-result"
           ref="allResultsRef"
         >
-          <!-- 快捷翻译 -->
-          <div class="translation" @click="toSearch(searchKeyword, 2)">
-            <SvgIcon iconName="icon-translation" />
-            <span class="text">快捷翻译：{{ searchKeyword }}</span>
-          </div>
-          <!-- 建议 -->
           <div
             v-for="item in searchSuggestionsData"
             class="s-result"
@@ -36,47 +75,6 @@
           >
             <SvgIcon iconName="icon-search" className="search" />
             <span class="text">{{ item }}</span>
-          </div>
-        </div>
-      </Transition>
-      <!-- 无搜索建议 -->
-      <Transition name="fade" mode="out-in">
-        <div
-          v-show="searchKeywordType === 'text' && !hasSuggestions"
-          class="no-result"
-        >
-          <SvgIcon iconName="icon-found" className="not-found" />
-          <div class="all-text">
-            <span class="text">暂无搜索建议</span>
-            <span class="tip">请尝试其他关键词</span>
-          </div>
-        </div>
-      </Transition>
-      <!-- 特殊类型 -->
-      <Transition name="fade" mode="out-in">
-        <div
-          v-show="searchKeywordType !== 'text'"
-          class="special-result"
-          ref="specialResultsRef"
-        >
-          <!-- 直接访问 -->
-          <div
-            class="s-result"
-            @click="
-              toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)
-            "
-          >
-            <SvgIcon iconName="icon-link" />
-            <span class="text">
-              {{
-                searchKeywordType === "email" ? "发送邮件至" : "直接访问"
-              }}：{{ searchKeyword }}
-            </span>
-          </div>
-          <!-- 直接搜索 -->
-          <div class="s-result" @click="toSearch(searchKeyword, 1)">
-            <SvgIcon iconName="icon-search" />
-            <span class="text">搜索：{{ searchKeyword }}</span>
           </div>
         </div>
       </Transition>
@@ -101,11 +99,9 @@ const searchKeyword = ref(null);
 const searchKeywordType = ref("text");
 // 搜索建议数据
 const searchSuggestionsData = ref([]);
-// 是否有搜索结果
-const hasSuggestions = ref(true);
 // 搜索建议元素
+const specialallResultsRef = ref(null);
 const allResultsRef = ref(null);
-const specialResultsRef = ref(null);
 // 搜索建议高度
 const suggestionsHeights = ref(0);
 // 接收搜索框内容
@@ -120,45 +116,32 @@ const props = defineProps({
 // 搜索框联想
 const keywordsSearch = debounce((val) => {
   const searchValue = val?.trim();
-  searchKeyword.value = searchValue;
-  // 判断类型
-  searchKeywordType.value = identifyInput(searchValue);
-  // 若为文字
-  if (searchKeywordType.value === "text") {
-    if (searchValue) {
-      console.log(val + "的搜索建议");
-      // 调用搜索建议
-      searchSuggestionsData.value = [];
-      getSearchSuggestions(searchValue)
-        .then((res) => {
-          console.log(res);
-          // 是否有结果
-          hasSuggestions.value = res[0] ? true : false;
-          // 写入结果
-          searchSuggestionsData.value = Array.from(res);
-          // 获取元素高度
-          nextTick(() => {
-            const height = allResultsRef.value?.offsetHeight;
-            suggestionsHeights.value = res[0] ? height : 130;
-          });
-        })
-        .catch((error) => {
-          console.error("处理搜索建议发生错误：", error);
-        });
-    } else {
-      searchKeyword.value = null;
-      hasSuggestions.value = true;
-      suggestionsHeights.value = 0;
-    }
+  // 是否为空
+  if (!searchValue || searchValue === "") {
+    searchKeyword.value = null;
+    return false;
   }
-  // 其他类型
-  else {
-    hasSuggestions.value = true;
-    // 获取元素高度
-    nextTick(() => {
-      const height = specialResultsRef.value?.offsetHeight;
-      suggestionsHeights.value = height ?? 62;
-    });
+  // 赋值关键字
+  searchKeyword.value = searchValue;
+  // 若为文字
+  if (searchKeyword.value && searchKeywordType.value === "text") {
+    console.log(val + "的搜索建议");
+    // 调用搜索建议
+    getSearchSuggestions(searchValue)
+      .then((res) => {
+        console.log(res);
+        // 写入结果
+        searchSuggestionsData.value = Array.from(res);
+        // 计算高度
+        nextTick(() => {
+          changeSuggestionsHeights();
+        });
+      })
+      .catch((error) => {
+        // 清空结果
+        searchSuggestionsData.value = [];
+        console.error("处理搜索建议发生错误：", error);
+      });
   }
 }, 300);
 
@@ -171,7 +154,7 @@ const keyboardEvents = (keyCode, event) => {
     if (keyCode === 38 || keyCode === 40) {
       // 阻止默认事件
       event.preventDefault();
-      if (mainInput && allResultsRef.value && hasSuggestions.value) {
+      if (mainInput && allResultsRef.value && searchSuggestionsData.value[0]) {
         const suggestionItems =
           allResultsRef.value.querySelectorAll(".s-result");
         if (suggestionItems.length > 0) {
@@ -208,6 +191,18 @@ const keyboardEvents = (keyCode, event) => {
   }
 };
 
+// 计算元素高度并改变
+const changeSuggestionsHeights = () => {
+  try {
+    const allResultsHeight = allResultsRef.value?.offsetHeight;
+    const specialallResultsHeight = specialallResultsRef.value?.offsetHeight;
+    suggestionsHeights.value =
+      (specialallResultsHeight || 0) + (allResultsHeight || 0);
+  } catch (error) {
+    console.error("计算高度时出现错误：" + error);
+  }
+};
+
 // 触发父组件搜索事件
 const toSearch = (val, type = 1) => {
   emit("toSearch", val, type);
@@ -216,7 +211,14 @@ const toSearch = (val, type = 1) => {
 // 监听搜索框变化
 watch(
   () => props.keyWord,
-  (val) => keywordsSearch(val)
+  (val) => {
+    // 清空结果
+    searchSuggestionsData.value = [];
+    // 判断类型
+    searchKeywordType.value = identifyInput(val);
+    // 调用搜索结果
+    keywordsSearch(val);
+  }
 );
 
 // 暴露方法
@@ -224,7 +226,7 @@ defineExpose({ keyboardEvents });
 </script>
 
 <style lang="scss" scoped>
-.search-suggestions {
+.suggestions {
   position: absolute;
   top: 0;
   left: 0;
@@ -233,13 +235,12 @@ defineExpose({ keyboardEvents });
   overflow-y: hidden;
   color: var(--main-text-color);
   background-color: var(--main-background-light-color);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(30px) saturate(1.25);
   border-radius: 16px;
-  transition: height 0.25s ease, opacity 0.3s ease, transform 0.3s ease;
+  transition: height 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
   .all-result,
   .special-result {
-    .s-result,
-    .translation {
+    .s-result {
       cursor: pointer;
       box-sizing: border-box;
       display: flex;
@@ -262,37 +263,6 @@ defineExpose({ keyboardEvents });
       &.focus {
         background-color: var(--main-background-light-color);
         padding-left: 18px;
-      }
-      &:first-child {
-        border-radius: 16px 16px 0 0;
-      }
-      &:last-child {
-        border-radius: 0 0 16px 16px;
-      }
-    }
-  }
-  .no-result {
-    width: 100%;
-    height: 130px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    .not-found {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-    .all-text {
-      display: flex;
-      flex-direction: column;
-      .text {
-        font-size: 18px;
-        display: inline-block;
-        margin-bottom: 6px;
-      }
-      .tip {
-        font-size: 14px;
-        opacity: 0.8;
       }
     }
   }

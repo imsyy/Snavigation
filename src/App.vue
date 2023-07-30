@@ -7,6 +7,10 @@
       <WeatherTime />
       <SearchInp />
       <Footer />
+      <!-- Notivue -->
+      <Notivue v-slot="item">
+        <Notifications :item="item" />
+      </Notivue>
     </main>
     <div v-else id="loading">
       <img src="/icon/logo.png" alt="logo" class="logo" />
@@ -17,6 +21,7 @@
 
 <script setup>
 import { statusStore } from "@/stores";
+import { Notivue, Notifications } from "notivue";
 import Cover from "@/components/Cover.vue";
 import WeatherTime from "@/components/WeatherTime.vue";
 import SearchInp from "@/components/SearchInp.vue";

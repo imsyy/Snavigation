@@ -42,10 +42,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { statusStore, setStore } from "@/stores";
+import { usePush } from "notivue";
 import Suggestions from "@/components/Suggestions.vue";
 
 const set = setStore();
 const status = statusStore();
+const push = usePush();
 
 // 搜索框配置
 const inputTip = import.meta.env.VITE_INPUT_TIP ?? "想要搜点什么";
@@ -107,6 +109,7 @@ const toSearch = (val, type = 1) => {
   } else {
     status.setSiteStatus("focus");
     searchInputRef.value?.focus();
+    push.info({ message: "请输入搜索内容", duration: 1000 });
   }
 };
 

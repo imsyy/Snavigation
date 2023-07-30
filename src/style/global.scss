@@ -1,6 +1,7 @@
 :root {
   --body-background-color: #333333;
   --main-text-color: #ffffff;
+  --main-text-grey-color: #eeeeee;
   --main-text-hover-color: #555555;
   --main-background-color: #00000040;
   --main-background-light-color: #ffffff30;
@@ -64,6 +65,24 @@ body {
 .show-leave-to {
   opacity: 0;
   transform: scale(0.6);
+}
+
+// Notivue
+.Notivue__notification {
+  background-color: var(--main-background-light-color);
+  // backdrop-filter: blur(30px) saturate(1.25);
+  border-radius: 25px;
+  .Notivue__icon,
+  .Notivue__close {
+    display: none;
+  }
+  .Notivue__content {
+    padding: 0.5rem;
+    .Notivue__content-message {
+      text-align: center;
+      color: var(--main-text-grey-color);
+    }
+  }
 }
 
 // 全局动画

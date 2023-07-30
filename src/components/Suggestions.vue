@@ -27,7 +27,7 @@
             class="s-result"
             @click="toSearch(keyWord, 2)"
           >
-            <SvgIcon iconName="icon-translation" />
+            <SvgIcon iconName="icon-translation-two" />
             <span class="text">快捷翻译：{{ keyWord }}</span>
           </div>
           <!-- 直接访问 -->
@@ -231,13 +231,14 @@ defineExpose({ keyboardEvents });
   top: 0;
   left: 0;
   width: 100%;
-  max-height: 338px;
-  overflow-y: hidden;
+  max-height: 44vh;
+  overflow-y: auto;
   color: var(--main-text-color);
   background-color: var(--main-background-light-color);
   backdrop-filter: blur(30px) saturate(1.25);
   border-radius: 16px;
   transition: height 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1;
   .all-result,
   .special-result {
     .s-result {

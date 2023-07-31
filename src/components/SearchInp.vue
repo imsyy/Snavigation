@@ -6,9 +6,11 @@
       @click="closeSearchInput"
     />
     <div
+      ref="searchAllRef"
       :class="status.siteStatus === 'focus' ? 'all focus' : 'all'"
       :style="{ pointerEvents: inputClickable ? 'none' : 'auto' }"
-      ref="searchAllRef"
+      @animationstart="inputClickable = true"
+      @animationend="inputAnimationEnd"
     >
       <div class="engine" title="切换搜索引擎">
         <SvgIcon iconName="icon-baidu" className="baidu" />
@@ -40,9 +42,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { statusStore, setStore } from "@/stores";
+import { ref } from "vue";
 import { usePush } from "notivue";
+import { statusStore, setStore } from "@/stores";
 import Suggestions from "@/components/Suggestions.vue";
 
 const set = setStore();
@@ -109,26 +111,19 @@ const toSearch = (val, type = 1) => {
   } else {
     status.setSiteStatus("focus");
     searchInputRef.value?.focus();
-    push.info({ message: "请输入搜索内容", duration: 1000 });
+    push.info({ message: "请输入搜索内容", duration: 1500 });
   }
 };
 
-// 搜索框 Dom 操作
-const searchInputDom = (dom) => {
-  if (!dom) return false;
-  dom.addEventListener("animationstart", () => {
-    console.log("动画开始");
-    inputClickable.value = true;
-  });
-  dom.addEventListener("animationend", () => {
-    console.log("动画结束");
-    inputClickable.value = false;
-    // 自动 focus
-    if (set.autoFocus) {
-      status.setSiteStatus("focus");
-      searchInputRef.value?.focus();
-    }
-  });
+// 搜索框动画结束
+const inputAnimationEnd = () => {
+  console.log("搜索框动画结束");
+  inputClickable.value = false;
+  // 自动 focus
+  if (set.autoFocus) {
+    status.setSiteStatus("focus");
+    searchInputRef.value?.focus();
+  }
 };
 
 // 键盘事件
@@ -140,10 +135,6 @@ const pressKeyboard = (event) => {
   // 子组件事件
   suggestionsRef.value?.keyboardEvents(keyCode, event);
 };
-
-onMounted(() => {
-  searchInputDom(searchAllRef.value);
-});
 </script>
 
 <style lang="scss" scoped>

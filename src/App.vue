@@ -1,6 +1,6 @@
 <template>
   <!-- 壁纸 -->
-  <Cover />
+  <Cover @loadComplete="loadComplete" />
   <!-- 主界面 -->
   <Transition name="fade" mode="out-in">
     <main v-if="status.imgLoadStatus" id="main" @click="mainClick">
@@ -20,18 +20,35 @@
 </template>
 
 <script setup>
+import { nextTick } from "vue";
 import { statusStore } from "@/stores";
-import { Notivue, Notifications } from "notivue";
+import { Notivue, Notifications, usePush } from "notivue";
+import { getGreeting } from "@/utils/timeTools";
 import Cover from "@/components/Cover.vue";
 import WeatherTime from "@/components/WeatherTime.vue";
 import SearchInp from "@/components/SearchInp.vue";
 import Footer from "@/components/Footer.vue";
 
 const status = statusStore();
+const push = usePush();
+
+// 获取配置
+const welcomeText = import.meta.env.VITE_WELCOME_TEXT ?? "欢迎访问本站";
 
 // 全局点击
 const mainClick = () => {
   status.setSiteStatus("normal");
+};
+
+// 加载完成事件
+const loadComplete = () => {
+  nextTick(() => {
+    push.info({
+      title: getGreeting(),
+      message: welcomeText,
+      duration: 2000,
+    });
+  });
 };
 </script>
 

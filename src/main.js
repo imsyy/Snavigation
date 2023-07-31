@@ -7,8 +7,7 @@ import SvgIcon from "@/components/SvgIcon.vue";
 import "@/utils/iconfont.js";
 // Notivue
 import { notivue } from "notivue";
-import "notivue/notifications.css"; // Only needed if using built-in notifications
-import "notivue/animations.css"; // Only needed if using built-in animations
+import "notivue/notifications.css";
 
 // 主组件
 import App from "@/App.vue";
@@ -27,6 +26,11 @@ app.use(pinia);
 app.use(notivue, {
   pauseOnHover: false,
   limit: 1,
+  animations: {
+    enter: "notivue-slide-in",
+    leave: "notivue-slide-out",
+    clearAll: "notivue-fade",
+  },
 });
 app.component("SvgIcon", SvgIcon);
 app.mount("#app");

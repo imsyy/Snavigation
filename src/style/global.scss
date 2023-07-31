@@ -29,11 +29,6 @@ body {
   height: 100vh;
 }
 
-::selection {
-  color: var(--main-text-color);
-  background-color: var(--main-text-hover-color);
-}
-
 // Transition 动画
 .fade-enter-active,
 .fade-leave-active {
@@ -68,6 +63,12 @@ body {
 }
 
 // Notivue
+.notivue-slide-in {
+  animation: notivue-slide-in 0.7s ease-in-out both;
+}
+.notivue-slide-out {
+  animation: notivue-slide-out 0.3s ease-in-out both;
+}
 .Notivue__notification {
   background-color: var(--main-background-light-color);
   // backdrop-filter: blur(30px) saturate(1.25);
@@ -77,10 +78,26 @@ body {
     display: none;
   }
   .Notivue__content {
-    padding: 0.5rem;
-    .Notivue__content-message {
-      text-align: center;
+    padding: 0.8rem 0.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .Notivue__content-title {
+      margin: 0;
+      margin-right: 6px;
+      line-height: inherit;
       color: var(--main-text-grey-color);
+    }
+    .Notivue__content-message {
+      line-height: inherit;
+      color: var(--main-text-grey-color);
+    }
+    @media (max-width: 480px) {
+      flex-direction: column;
+      .Notivue__content-title {
+        margin-bottom: 6px;
+      }
     }
   }
 }
@@ -147,4 +164,57 @@ body {
   100% {
     transform: scale(1);
   }
+}
+
+@keyframes notivue-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+  70% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes notivue-slide-out {
+  from {
+    transform: perspective(400px);
+  }
+  30% {
+    transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+    opacity: 1;
+  }
+  to {
+    transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+    opacity: 0;
+  }
+}
+
+// 文本选中
+::selection {
+  color: var(--main-text-color);
+  background-color: var(--main-text-hover-color);
+}
+
+// 滚动条
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--main-background-color);
 }

@@ -27,3 +27,27 @@ export const getCurrentTime = () => {
   };
   return currentTime;
 };
+
+/**
+ * 根据实时时间返回不同的问候语
+ * @returns {string} 问候语
+ */
+export const getGreeting = () => {
+  const currentTime = new Date();
+  const currentHour = currentTime.getHours();
+  let greeting = "";
+  if (currentHour >= 5 && currentHour < 9) {
+    greeting = "早上好";
+  } else if (currentHour >= 9 && currentHour < 12) {
+    greeting = "上午好";
+  } else if (currentHour >= 12 && currentHour < 18) {
+    greeting = "下午好";
+  } else if (currentHour >= 18 && currentHour < 24) {
+    greeting = "晚上好";
+  } else if (currentHour >= 0 && currentHour < 5) {
+    greeting = "凌晨好";
+  } else {
+    greeting = "夜深了";
+  }
+  return greeting;
+};

@@ -7,6 +7,7 @@
       :src="bgUrl"
       @load="imgLoadComplete"
       @error.once="imgLoadError"
+      @animationend="imgAnimationEnd"
     />
     <Transition name="fade">
       <div v-if="set.showBackgroundGray" class="gray" />
@@ -22,6 +23,7 @@ const set = setStore();
 const status = statusStore();
 const bgUrl = ref(null);
 const imgTimeout = ref(null);
+const emit = defineEmits(["loadComplete"]);
 
 // 壁纸随机数
 // 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
@@ -53,8 +55,14 @@ const setBgUrl = () => {
 const imgLoadComplete = () => {
   imgTimeout.value = setTimeout(() => {
     status.setImgLoadStatus(true);
-    console.log("壁纸加载完成");
-  }, 500);
+  }, Math.floor(Math.random() * (600 - 300 + 1)) + 300);
+};
+
+// 图片动画完成
+const imgAnimationEnd = () => {
+  console.log("壁纸加载且动画完成");
+  // 加载完成事件
+  emit("loadComplete");
 };
 
 // 图片显示失败

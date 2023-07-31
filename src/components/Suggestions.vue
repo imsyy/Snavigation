@@ -232,7 +232,10 @@ defineExpose({ keyboardEvents });
   left: 0;
   width: 100%;
   max-height: 44vh;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   color: var(--main-text-color);
   background-color: var(--main-background-light-color);
   backdrop-filter: blur(30px) saturate(1.25);
@@ -260,12 +263,22 @@ defineExpose({ keyboardEvents });
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      &:hover,
-      &.focus {
+      @media (min-width: 520px) {
+        &:hover,
+        &.focus {
+          background-color: var(--main-background-light-color);
+          padding-left: 18px;
+        }
+      }
+      &:active {
         background-color: var(--main-background-light-color);
         padding-left: 18px;
       }
     }
+  }
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
 }
 </style>

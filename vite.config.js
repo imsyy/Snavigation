@@ -1,10 +1,54 @@
 import { defineConfig } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    // PWA
+    VitePWA({
+      registerType: "autoUpdate",
+      workbox: {
+        clientsClaim: true,
+        skipWaiting: true,
+        cleanupOutdatedCaches: true,
+        runtimeCaching: [
+          {
+            urlPattern: /(.*?)\.(woff2|woff|ttf)/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "file-cache",
+            },
+          },
+          {
+            urlPattern: /(.*?)\.(webp|png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "image-cache",
+            },
+          },
+        ],
+      },
+      manifest: {
+        name: "Snavigation",
+        short_name: "Snavigation",
+        description: "一个极致简约的导航页",
+        display: "standalone",
+        start_url: "/",
+        theme_color: "#fff",
+        background_color: "#efefef",
+        icons: [
+          {
+            src: "/icon/logo-144.png",
+            sizes: "144x144",
+            type: "image/png",
+          },
+        ],
+      },
+    }),
+  ],
   server: {
     host: "0.0.0.0",
     port: 5588,

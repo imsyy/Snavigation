@@ -8,9 +8,10 @@ const useSetDataStore = defineStore("setData", {
       backgroundType: 0,
       // 壁纸遮罩
       showBackgroundGray: true,
-      // 默认搜索引擎
+      // 搜索引擎
       searchEngine: "bing",
       lastSearchEngine: "bing",
+      customEngine: {},
       // 清空搜索框
       showCleanInput: true,
       // 搜索框自动 focus

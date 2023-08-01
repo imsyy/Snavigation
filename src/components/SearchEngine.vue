@@ -6,7 +6,7 @@
           <div
             v-for="(item, key) in defaultEngine"
             :key="key"
-            class="engine"
+            :class="['engine', key === set.searchEngine ? 'choose' : null]"
             @click="changeSearchEngine(key)"
           >
             <SvgIcon :iconName="`icon-${key}`" />
@@ -78,9 +78,12 @@ const changeSearchEngine = (key) => {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+        &.choose {
+          background-color: var(--main-background-hover-color);
+        }
         &:hover {
           background-color: var(--main-background-hover-color);
-          box-shadow: 0 0 0px 2px #ffffff30;
+          box-shadow: 0 0 0px 2px var(--main-background-hover-color);
         }
       }
       @media (max-width: 798px) {

@@ -13,10 +13,12 @@
       @animationend="inputAnimationEnd"
     >
       <div class="engine" title="切换搜索引擎" @click="changeEngine">
-        <SvgIcon
-          :iconName="`icon-${defaultEngine[set.searchEngine].icon}`"
-          className="baidu"
-        />
+        <Transition name="fade" mode="out-in">
+          <SvgIcon
+            :iconName="`icon-${defaultEngine[set.searchEngine].icon}`"
+            :key="set.searchEngine"
+          />
+        </Transition>
       </div>
       <input
         class="input"
@@ -92,25 +94,33 @@ const toSearch = (val, type = 1) => {
   };
   // 是否为空
   if (searchValue) {
+    const searchFormat = encodeURIComponent(searchValue);
     console.log("前往搜索：" + searchValue, type);
-    // 1 默认 / 2 快捷翻译 / 3 电子邮件 / 4 直接访问
     switch (type) {
+      // 默认搜索
       case 1:
         const engine = defaultEngine[set.searchEngine];
-        const value = encodeURIComponent(searchValue);
-        jumpLink(engine.url + value);
+        jumpLink(engine.url + searchFormat);
         break;
+      // 快捷翻译
       case 2:
-        jumpLink(`https://fanyi.baidu.com/#en/zh/${searchValue}`);
+        const hasTranslation = defaultEngine[set.searchEngine]?.translation;
+        jumpLink(
+          hasTranslation
+            ? hasTranslation + searchFormat
+            : `https://fanyi.baidu.com/#en/zh/${searchFormat}`
+        );
         break;
+      // 电子邮件
       case 3:
-        jumpLink(`mailto:${searchValue}`);
+        jumpLink(`mailto:${searchFormat}`);
         break;
+      // 直接访问
       case 4:
         const urlRegex = /^(https?:\/\/)/i;
-        const url = urlRegex.test(searchValue)
-          ? searchValue
-          : `//${searchValue}`;
+        const url = urlRegex.test(searchFormat)
+          ? searchFormat
+          : `//${searchFormat}`;
         jumpLink(url);
         break;
       default:

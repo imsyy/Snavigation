@@ -2,21 +2,25 @@
   "baidu": {
     "name": "百度",
     "url": "https://www.baidu.com/s?wd=",
+    "translation": "https://fanyi.baidu.com/#zh/en/",
     "icon": "baidu"
   },
   "bing": {
     "name": "必应",
     "url": "https://www.bing.com/search?q=",
+    "translation": "https://www.bing.com/translator?text=",
     "icon": "bing"
   },
   "google": {
     "name": "谷歌",
     "url": "https://www.google.com/search?q=",
+    "translation": "https://translate.google.com/?text=",
     "icon": "google"
   },
   "sogou": {
     "name": "搜狗",
     "url": "https://www.sogou.com/sogou?query=",
+    "translation": "https://fanyi.sogou.com/text?keyword=",
     "icon": "sogou"
   },
   "duckduckgo": {
@@ -27,11 +31,13 @@
   "yandex": {
     "name": "Yandex",
     "url": "https://yandex.com/search/?text=",
+    "translation": "https://translate.yandex.com/?text=",
     "icon": "yandex"
   },
   "search-360": {
     "name": "360 搜索",
     "url": "https://www.so.com/s?q=",
+    "translation": "https://fanyi.so.com/#",
     "icon": "search-360"
   },
   "weibo": {

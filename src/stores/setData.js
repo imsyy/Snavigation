@@ -9,8 +9,8 @@ const useSetDataStore = defineStore("setData", {
       // 壁纸遮罩
       showBackgroundGray: true,
       // 默认搜索引擎
-      searchEngine: null,
-      lastSearchEngine: null,
+      searchEngine: "bing",
+      lastSearchEngine: "bing",
       // 清空搜索框
       showCleanInput: true,
       // 搜索框自动 focus
@@ -25,6 +25,14 @@ const useSetDataStore = defineStore("setData", {
       // open 当前页面 / href 新标签页
       urlJumpType: "href",
     };
+  },
+  actions: {
+    setSearchEngine(value) {
+      // 储存上次
+      this.lastSearchEngine = this.searchEngine;
+      // 设置新引擎
+      this.searchEngine = value;
+    },
   },
   // 开启数据持久化
   persist: {

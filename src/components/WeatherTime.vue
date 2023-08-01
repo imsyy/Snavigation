@@ -3,6 +3,7 @@
     :class="
       status.siteStatus !== 'normal' ? 'weather-time focus' : 'weather-time'
     "
+    @click.stop
   >
     <div :class="['time', set.timeStyle]">
       <span class="hour">{{ timeData.hour ?? "00" }}</span>
@@ -112,6 +113,7 @@ onBeforeUnmount(() => {
   color: var(--main-text-color);
   animation: fade-time-in 0.6s cubic-bezier(0.21, 0.78, 0.36, 1);
   transition: transform 0.3s;
+  z-index: 1;
   &.focus {
     transform: translateY(-170px);
   }

@@ -8,6 +8,9 @@ import "@/utils/iconfont.js";
 // Notivue
 import { notivue } from "notivue";
 import "notivue/notifications.css";
+// PerfectScrollbar
+import PerfectScrollbar from "vue3-perfect-scrollbar";
+import "vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css";
 
 // 主组件
 import App from "@/App.vue";
@@ -32,5 +35,6 @@ app.use(notivue, {
     clearAll: "notivue-fade",
   },
 });
+app.use(PerfectScrollbar);
 app.component("SvgIcon", SvgIcon);
 app.mount("#app");

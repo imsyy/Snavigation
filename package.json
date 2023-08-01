@@ -1,10 +1,10 @@
 {
   "name": "snavigation",
   "private": true,
-  "version": "2.0.0 beta 1",
+  "version": "2.0.0 beta 2",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -15,7 +15,8 @@
     "pinia": "^2.1.4",
     "pinia-plugin-persistedstate": "^3.2.0",
     "sass": "^1.64.1",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue3-perfect-scrollbar": "^1.6.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

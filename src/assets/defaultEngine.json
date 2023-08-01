@@ -1,0 +1,67 @@
+{
+  "baidu": {
+    "name": "百度",
+    "url": "https://www.baidu.com/s?wd=",
+    "icon": "baidu"
+  },
+  "bing": {
+    "name": "必应",
+    "url": "https://www.bing.com/search?q=",
+    "icon": "bing"
+  },
+  "google": {
+    "name": "谷歌",
+    "url": "https://www.google.com/search?q=",
+    "icon": "google"
+  },
+  "sogou": {
+    "name": "搜狗",
+    "url": "https://www.sogou.com/sogou?query=",
+    "icon": "sogou"
+  },
+  "duckduckgo": {
+    "name": "DuckDuckGo",
+    "url": "https://duckduckgo.com/?q=",
+    "icon": "duckduckgo"
+  },
+  "yandex": {
+    "name": "Yandex",
+    "url": "https://yandex.com/search/?text=",
+    "icon": "yandex"
+  },
+  "search-360": {
+    "name": "360 搜索",
+    "url": "https://www.so.com/s?q=",
+    "icon": "search-360"
+  },
+  "weibo": {
+    "name": "微博",
+    "url": "https://s.weibo.com/weibo?q=",
+    "icon": "weibo"
+  },
+  "bilibili": {
+    "name": "BiliBili",
+    "url": "https://search.bilibili.com/all?keyword=",
+    "icon": "bilibili"
+  },
+  "github": {
+    "name": "Github",
+    "url": "https://github.com/search?q=",
+    "icon": "github"
+  },
+  "zhihu": {
+    "name": "知乎",
+    "url": "https://www.zhihu.com/search?q=",
+    "icon": "zhihu"
+  },
+  "jingdong": {
+    "name": "京东",
+    "url": "https://search.jd.com/Search?keyword=",
+    "icon": "jingdong"
+  },
+  "taobao": {
+    "name": "淘宝",
+    "url": "https://s.taobao.com/search?q=",
+    "icon": "taobao"
+  }
+}

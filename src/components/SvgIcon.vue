@@ -36,6 +36,7 @@ const svgClass = computed(() => {
 .i-icon {
   width: 1em;
   height: 1em;
+  min-width: 1em;
   position: relative;
   fill: currentColor;
   vertical-align: -2px;

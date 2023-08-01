@@ -12,8 +12,11 @@
       @animationstart="inputClickable = true"
       @animationend="inputAnimationEnd"
     >
-      <div class="engine" title="切换搜索引擎">
-        <SvgIcon iconName="icon-baidu" className="baidu" />
+      <div class="engine" title="切换搜索引擎" @click="changeEngine">
+        <SvgIcon
+          :iconName="`icon-${defaultEngine[set.searchEngine].icon}`"
+          className="baidu"
+        />
       </div>
       <input
         class="input"
@@ -26,12 +29,15 @@
         :placeholder="inputTip"
         v-model="inputValue"
         @focus="status.setSiteStatus('focus')"
+        @click.stop="status.setEngineChangeStatus(false)"
         @keydown.stop="pressKeyboard"
       />
       <div class="go" title="搜索" @click="toSearch(inputValue)">
         <SvgIcon iconName="icon-search" className="search" />
       </div>
     </div>
+    <!-- 搜索引擎 -->
+    <SearchEngine />
     <!-- 搜索建议 -->
     <Suggestions
       ref="suggestionsRef"
@@ -45,7 +51,9 @@
 import { ref } from "vue";
 import { usePush } from "notivue";
 import { statusStore, setStore } from "@/stores";
+import SearchEngine from "@/components/SearchEngine.vue";
 import Suggestions from "@/components/Suggestions.vue";
+import defaultEngine from "@/assets/defaultEngine.json";
 
 const set = setStore();
 const status = statusStore();
@@ -66,6 +74,7 @@ const suggestionsRef = ref(null);
 // 关闭搜索框
 const closeSearchInput = () => {
   status.setSiteStatus("normal");
+  status.setEngineChangeStatus(false);
   searchInputRef.value?.blur();
   inputValue.value = "";
 };
@@ -84,12 +93,12 @@ const toSearch = (val, type = 1) => {
   // 是否为空
   if (searchValue) {
     console.log("前往搜索：" + searchValue, type);
-    // type
     // 1 默认 / 2 快捷翻译 / 3 电子邮件 / 4 直接访问
-    // 切换搜索引擎还没写，先这样
     switch (type) {
       case 1:
-        jumpLink(`https://www.bing.com/search?q=${searchValue}`);
+        const engine = defaultEngine[set.searchEngine];
+        const value = encodeURIComponent(searchValue);
+        jumpLink(engine.url + value);
         break;
       case 2:
         jumpLink(`https://fanyi.baidu.com/#en/zh/${searchValue}`);
@@ -130,10 +139,14 @@ const inputAnimationEnd = () => {
 const pressKeyboard = (event) => {
   // 获取键的键码
   const keyCode = event.keyCode;
-  // 13 回车
-  if (keyCode === 13) toSearch();
   // 子组件事件
   suggestionsRef.value?.keyboardEvents(keyCode, event);
+};
+
+// 更换搜索引擎
+const changeEngine = () => {
+  status.setSiteStatus("focus");
+  status.setEngineChangeStatus(!status.engineChangeStatus);
 };
 </script>
 
@@ -170,7 +183,7 @@ const pressKeyboard = (event) => {
     z-index: 1;
     &.focus {
       transform: translateY(-50px);
-      background-color: var(--main-background-hover-color);
+      background-color: var(--main-input-hover-color);
       .input {
         color: var(--main-text-hover-color);
         &::placeholder {

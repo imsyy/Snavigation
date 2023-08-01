@@ -3,81 +3,84 @@
     <div
       v-if="
         set.showSuggestions &&
+        searchKeyword !== null &&
         status.siteStatus === 'focus' &&
-        searchKeyword !== null
+        !status.engineChangeStatus
       "
       class="suggestions"
       :style="{ height: `${suggestionsHeights}px` }"
     >
-      <!-- 快捷操作 -->
-      <Transition
-        name="fade"
-        mode="out-in"
-        @after-enter="changeSuggestionsHeights"
-        @after-leave="changeSuggestionsHeights"
-      >
-        <div
-          v-if="searchKeyword !== null"
-          class="special-result"
-          ref="specialallResultsRef"
+      <perfect-scrollbar class="scrollbar">
+        <!-- 快捷操作 -->
+        <Transition
+          name="fade"
+          mode="out-in"
+          @after-enter="changeSuggestionsHeights"
+          @after-leave="changeSuggestionsHeights"
         >
-          <!-- 快捷翻译 -->
           <div
-            v-if="searchKeywordType === 'text'"
-            class="s-result"
-            @click="toSearch(keyWord, 2)"
+            v-if="searchKeyword !== null"
+            class="special-result"
+            ref="specialallResultsRef"
           >
-            <SvgIcon iconName="icon-translation-two" />
-            <span class="text">快捷翻译：{{ keyWord }}</span>
+            <!-- 快捷翻译 -->
+            <div
+              v-if="searchKeywordType === 'text'"
+              class="s-result"
+              @click="toSearch(keyWord, 2)"
+            >
+              <SvgIcon iconName="icon-translation-two" />
+              <span class="text">快捷翻译：{{ keyWord }}</span>
+            </div>
+            <!-- 直接访问 -->
+            <div
+              v-if="searchKeywordType !== 'text'"
+              class="s-result"
+              @click="
+                toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)
+              "
+            >
+              <SvgIcon
+                :iconName="`icon-${
+                  searchKeywordType === 'email' ? 'email' : 'link'
+                }`"
+              />
+              <span class="text">
+                {{
+                  searchKeywordType === "email" ? "发送邮件至" : "直接访问"
+                }}：{{ searchKeyword }}
+              </span>
+            </div>
           </div>
-          <!-- 直接访问 -->
+        </Transition>
+        <!-- 搜索建议 -->
+        <Transition
+          name="fade"
+          mode="out-in"
+          @after-enter="changeSuggestionsHeights"
+          @after-leave="changeSuggestionsHeights"
+        >
           <div
-            v-if="searchKeywordType !== 'text'"
-            class="s-result"
-            @click="
-              toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)
+            v-if="
+              searchKeyword !== null &&
+              searchKeywordType === 'text' &&
+              searchSuggestionsData[0]
             "
+            class="all-result"
+            ref="allResultsRef"
           >
-            <SvgIcon
-              :iconName="`icon-${
-                searchKeywordType === 'email' ? 'email' : 'link'
-              }`"
-            />
-            <span class="text">
-              {{
-                searchKeywordType === "email" ? "发送邮件至" : "直接访问"
-              }}：{{ searchKeyword }}
-            </span>
+            <div
+              v-for="item in searchSuggestionsData"
+              class="s-result"
+              :key="item"
+              @click="toSearch(item, 1)"
+            >
+              <SvgIcon iconName="icon-search" className="search" />
+              <span class="text">{{ item }}</span>
+            </div>
           </div>
-        </div>
-      </Transition>
-      <!-- 搜索建议 -->
-      <Transition
-        name="fade"
-        mode="out-in"
-        @after-enter="changeSuggestionsHeights"
-        @after-leave="changeSuggestionsHeights"
-      >
-        <div
-          v-if="
-            searchKeyword !== null &&
-            searchKeywordType === 'text' &&
-            searchSuggestionsData[0]
-          "
-          class="all-result"
-          ref="allResultsRef"
-        >
-          <div
-            v-for="item in searchSuggestionsData"
-            class="s-result"
-            :key="item"
-            @click="toSearch(item, 1)"
-          >
-            <SvgIcon iconName="icon-search" className="search" />
-            <span class="text">{{ item }}</span>
-          </div>
-        </div>
-      </Transition>
+        </Transition>
+      </perfect-scrollbar>
     </div>
   </Transition>
 </template>
@@ -121,6 +124,8 @@ const keywordsSearch = debounce((val) => {
     searchKeyword.value = null;
     return false;
   }
+  // 关闭切换搜索引擎
+  status.setEngineChangeStatus(false);
   // 赋值关键字
   searchKeyword.value = searchValue;
   // 若为文字
@@ -231,54 +236,50 @@ defineExpose({ keyboardEvents });
   top: 0;
   left: 0;
   width: 100%;
-  max-height: 44vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
   color: var(--main-text-color);
   background-color: var(--main-background-light-color);
   backdrop-filter: blur(30px) saturate(1.25);
   border-radius: 16px;
+  overflow: hidden;
   transition: height 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
   z-index: 1;
-  .all-result,
-  .special-result {
-    .s-result {
-      cursor: pointer;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 6px 12px;
-      font-size: 14px;
-      transition: background-color 0.3s, padding-left 0.3s;
-      .i-icon {
-        opacity: 0.8;
-        margin-right: 8px;
-      }
-      .text {
-        width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-      @media (min-width: 520px) {
-        &:hover,
-        &.focus {
+  .scrollbar {
+    max-height: 44vh;
+
+    .all-result,
+    .special-result {
+      .s-result {
+        cursor: pointer;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 6px 12px;
+        font-size: 14px;
+        transition: background-color 0.3s, padding-left 0.3s;
+        .i-icon {
+          opacity: 0.8;
+          margin-right: 8px;
+        }
+        .text {
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        @media (min-width: 520px) {
+          &:hover,
+          &.focus {
+            background-color: var(--main-background-light-color);
+            padding-left: 18px;
+          }
+        }
+        &:active {
           background-color: var(--main-background-light-color);
           padding-left: 18px;
         }
       }
-      &:active {
-        background-color: var(--main-background-light-color);
-        padding-left: 18px;
-      }
     }
-  }
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
   }
 }
 </style>

@@ -51,7 +51,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { usePush } from "notivue";
 import { statusStore, setStore } from "@/stores";
 import SearchEngine from "@/components/SearchEngine.vue";
 import Suggestions from "@/components/Suggestions.vue";
@@ -59,7 +58,6 @@ import defaultEngine from "@/assets/defaultEngine.json";
 
 const set = setStore();
 const status = statusStore();
-const push = usePush();
 
 // 搜索框配置
 const inputTip = import.meta.env.VITE_INPUT_TIP ?? "想要搜点什么";
@@ -130,7 +128,6 @@ const toSearch = (val, type = 1) => {
   } else {
     status.setSiteStatus("focus");
     searchInputRef.value?.focus();
-    push.info({ message: "请输入搜索内容", duration: 1500 });
   }
 };
 
@@ -192,7 +189,7 @@ const changeEngine = () => {
     transition: transform 0.3s, background-color 0.3s;
     z-index: 1;
     &.focus {
-      transform: translateY(-50px);
+      transform: translateY(-60px);
       background-color: var(--main-input-hover-color);
       .input {
         color: var(--main-text-hover-color);
@@ -239,6 +236,9 @@ const changeEngine = () => {
       transition: background-color 0.3s;
       &:hover {
         background-color: var(--main-background-color);
+      }
+      @media (max-width: 520px) {
+        font-size: 18px;
       }
     }
   }

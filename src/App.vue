@@ -1,36 +1,35 @@
 <template>
-  <!-- 壁纸 -->
-  <Cover @loadComplete="loadComplete" />
-  <!-- 主界面 -->
-  <Transition name="fade" mode="out-in">
-    <main v-if="status.imgLoadStatus" id="main" @click="mainClick">
-      <WeatherTime />
-      <SearchInp />
-      <Footer />
-      <!-- Notivue -->
-      <Notivue v-slot="item">
-        <Notifications :item="item" />
-      </Notivue>
-    </main>
-    <div v-else id="loading">
-      <img src="/icon/logo.png" alt="logo" class="logo" />
-      <span class="tip">开发中</span>
-    </div>
-  </Transition>
+  <Provider>
+    <!-- 壁纸 -->
+    <Cover @loadComplete="loadComplete" />
+    <!-- 主界面 -->
+    <Transition name="fade" mode="out-in">
+      <main v-if="status.imgLoadStatus" id="main" @click="mainClick">
+        <WeatherTime />
+        <SearchInp />
+        <Footer />
+        <!-- Notification -->
+        <Notification />
+      </main>
+      <div v-else id="loading">
+        <img src="/icon/logo.png" alt="logo" class="logo" />
+        <span class="tip">开发中</span>
+      </div>
+    </Transition>
+  </Provider>
 </template>
 
 <script setup>
 import { nextTick } from "vue";
 import { statusStore } from "@/stores";
-import { Notivue, Notifications, usePush } from "notivue";
 import { getGreeting } from "@/utils/timeTools";
+import Provider from "@/components/Provider.vue";
 import Cover from "@/components/Cover.vue";
 import WeatherTime from "@/components/WeatherTime.vue";
 import SearchInp from "@/components/SearchInp.vue";
 import Footer from "@/components/Footer.vue";
 
 const status = statusStore();
-const push = usePush();
 
 // 获取配置
 const welcomeText = import.meta.env.VITE_WELCOME_TEXT ?? "欢迎访问本站";
@@ -43,10 +42,9 @@ const mainClick = () => {
 // 加载完成事件
 const loadComplete = () => {
   nextTick(() => {
-    push.info({
-      title: getGreeting(),
-      message: welcomeText,
-      duration: 2000,
+    $message.info(getGreeting() + "，" + welcomeText, {
+      showIcon: false,
+      duration: 3000,
     });
   });
 };

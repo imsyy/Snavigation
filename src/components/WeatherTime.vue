@@ -61,7 +61,7 @@ const getWeatherData = () => {
     data: {},
     lastFetchTime: 0,
   };
-  // 上次获取天气数据的时间戳与当前时间的时间差（单位：毫秒）
+  // 上次获取天气数据的时间戳与当前时间的时间差（毫秒）
   const timeDifference = currentTime - lastWeatherData.lastFetchTime;
   // 是否超出 2 分钟
   if (timeDifference >= 2 * 60 * 1000) {
@@ -81,6 +81,9 @@ const getWeatherData = () => {
       })
       .catch((error) => {
         console.error("天气获取失败：" + error);
+        $message.warning("天气获取失败", {
+          duration: 1500,
+        });
         weatherShow.value = false;
       });
   } else {
@@ -115,7 +118,7 @@ onBeforeUnmount(() => {
   transition: transform 0.3s;
   z-index: 1;
   &.focus {
-    transform: translateY(-170px);
+    transform: translateY(-180px);
   }
   .time {
     cursor: pointer;

@@ -10,7 +10,7 @@
       class="suggestions"
       :style="{ height: `${suggestionsHeights}px` }"
     >
-      <perfect-scrollbar class="scrollbar">
+      <n-scrollbar style="max-height: 45vh">
         <!-- 快捷操作 -->
         <Transition
           name="fade"
@@ -61,11 +61,7 @@
           @after-leave="changeSuggestionsHeights"
         >
           <div
-            v-if="
-              searchKeyword !== null &&
-              searchKeywordType === 'text' &&
-              searchSuggestionsData[0]
-            "
+            v-if="searchKeyword !== null && searchSuggestionsData[0]"
             class="all-result"
             ref="allResultsRef"
           >
@@ -80,12 +76,13 @@
             </div>
           </div>
         </Transition>
-      </perfect-scrollbar>
+      </n-scrollbar>
     </div>
   </Transition>
 </template>
 
 <script setup>
+import { NScrollbar } from "naive-ui";
 import { nextTick, ref, watch } from "vue";
 import { statusStore, setStore } from "@/stores";
 import { getSearchSuggestions } from "@/api";
@@ -129,7 +126,7 @@ const keywordsSearch = debounce((val) => {
   // 赋值关键字
   searchKeyword.value = searchValue;
   // 若为文字
-  if (searchKeyword.value && searchKeywordType.value === "text") {
+  if (searchKeyword.value) {
     console.log(val + "的搜索建议");
     // 调用搜索建议
     getSearchSuggestions(searchValue)
@@ -233,51 +230,49 @@ defineExpose({ keyboardEvents });
 <style lang="scss" scoped>
 .suggestions {
   position: absolute;
-  top: 0;
+  top: -10px;
   left: 0;
   width: 100%;
+  max-height: 45vh;
+  overflow: hidden;
   color: var(--main-text-color);
   background-color: var(--main-background-light-color);
   backdrop-filter: blur(30px) saturate(1.25);
   border-radius: 16px;
-  overflow: hidden;
   transition: height 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
   z-index: 1;
-  .scrollbar {
-    max-height: 44vh;
 
-    .all-result,
-    .special-result {
-      .s-result {
-        cursor: pointer;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 6px 12px;
-        font-size: 14px;
-        transition: background-color 0.3s, padding-left 0.3s;
-        .i-icon {
-          opacity: 0.8;
-          margin-right: 8px;
-        }
-        .text {
-          width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-        @media (min-width: 520px) {
-          &:hover,
-          &.focus {
-            background-color: var(--main-background-light-color);
-            padding-left: 18px;
-          }
-        }
-        &:active {
+  .all-result,
+  .special-result {
+    .s-result {
+      cursor: pointer;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 6px 12px;
+      font-size: 14px;
+      transition: background-color 0.3s, padding-left 0.3s;
+      .i-icon {
+        opacity: 0.8;
+        margin-right: 8px;
+      }
+      .text {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      @media (min-width: 520px) {
+        &:hover,
+        &.focus {
           background-color: var(--main-background-light-color);
           padding-left: 18px;
         }
+      }
+      &:active {
+        background-color: var(--main-background-light-color);
+        padding-left: 18px;
       }
     }
   }

@@ -3,6 +3,7 @@
   <n-config-provider
     :locale="zhCN"
     :date-locale="dateZhCN"
+    :theme="darkTheme"
     :theme-overrides="themeOverrides"
     abstract
     inline-theme-disabled
@@ -23,6 +24,7 @@ import { defineComponent } from "vue";
 import {
   zhCN,
   dateZhCN,
+  darkTheme,
   NConfigProvider,
   NDialogProvider,
   NNotificationProvider,
@@ -36,6 +38,10 @@ import {
 const themeOverrides = {
   common: {
     fontFamily: "'HarmonyOS_Regular', sans-serif",
+    primaryColor: "#ffffff",
+    primaryColorHover: "#ffffff70",
+    primaryColorSuppl: "#ffffff30",
+    primaryColorPressed: "#ffffff30",
   },
 };
 

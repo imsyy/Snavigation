@@ -8,6 +8,7 @@
   --main-background-hover-color: #ffffff70;
   --main-input-hover-color: #ffffff;
   --main-notification-background-color: #00000030;
+  --main-box-shadow: 0px 0px 10px 0px #00000020;
   --main-text-shadow: 0px 0px 8px #00000066;
 }
 
@@ -49,10 +50,42 @@ body {
   }
 }
 
+// NTabs
+.n-tabs {
+  height: 100%;
+  --n-bar-color: var(--main-text-color) !important;
+  --n-tab-text-color-active: var(--main-text-color) !important;
+  --n-tab-text-color-hover: var(--main-text-color) !important;
+  .n-tabs-nav {
+    height: 44px;
+  }
+  .n-tabs-pane-wrapper {
+    height: 100%;
+    .n-tab-pane {
+      padding: 20px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+// NSwitch
+.n-switch {
+  --n-rail-color: var(--main-background-light-color) !important;
+  --n-rail-color-active: var(--main-background-hover-color) !important;
+  --n-box-shadow-focus: var(--main-box-shadow) !important;
+}
+
+// NScrollbar
+.n-scrollbar {
+  .n-scrollbar-rail {
+    right: 0 !important;
+  }
+}
+
 // Transition 动画
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease-in-out;
 }
 
 .fade-enter-from,

@@ -27,7 +27,7 @@
             <div
               v-if="searchKeywordType === 'text'"
               class="s-result"
-              @click="toSearch(keyWord, 2)"
+              @click.stop="toSearch(keyWord, 2)"
             >
               <SvgIcon iconName="icon-translation-two" />
               <span class="text">快捷翻译：{{ keyWord }}</span>
@@ -36,7 +36,7 @@
             <div
               v-if="searchKeywordType !== 'text'"
               class="s-result"
-              @click="
+              @click.stop="
                 toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)
               "
             >
@@ -69,7 +69,7 @@
               v-for="item in searchSuggestionsData"
               class="s-result"
               :key="item"
-              @click="toSearch(item, 1)"
+              @click.stop="toSearch(item, 1)"
             >
               <SvgIcon iconName="icon-search" className="search" />
               <span class="text">{{ item }}</span>
@@ -214,12 +214,14 @@ const toSearch = (val, type = 1) => {
 watch(
   () => props.keyWord,
   (val) => {
-    // 清空结果
-    searchSuggestionsData.value = [];
-    // 判断类型
-    searchKeywordType.value = identifyInput(val);
-    // 调用搜索结果
-    keywordsSearch(val);
+    if (set.showSuggestions) {
+      // 清空结果
+      searchSuggestionsData.value = [];
+      // 判断类型
+      searchKeywordType.value = identifyInput(val);
+      // 调用搜索结果
+      keywordsSearch(val);
+    }
   }
 );
 

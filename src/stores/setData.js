@@ -16,6 +16,8 @@ const useSetDataStore = defineStore("setData", {
       showCleanInput: true,
       // 搜索框自动 focus
       autoFocus: false,
+      // 搜索后搜索框自动失焦
+      autoInputBlur: true,
       // 时间样式
       timeStyle: "one",
       // 是否显秒
@@ -23,8 +25,8 @@ const useSetDataStore = defineStore("setData", {
       // 是否显示搜索建议
       showSuggestions: true,
       // 跳转方式
-      // open 当前页面 / href 新标签页
-      urlJumpType: "href",
+      // open 新标签页 / href 当前页面
+      urlJumpType: "open",
     };
   },
   actions: {

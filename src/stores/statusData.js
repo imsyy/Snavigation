@@ -10,6 +10,8 @@ const useStatusDataStore = defineStore("statusData", {
       siteStatus: "normal",
       // 切换搜索引擎
       engineChangeStatus: false,
+      // 搜索框文本
+      searchInputValue: "",
     };
   },
   getters: {},
@@ -19,9 +21,13 @@ const useStatusDataStore = defineStore("statusData", {
     },
     setSiteStatus(value) {
       this.siteStatus = value;
+      this.searchInputValue = "";
     },
     setEngineChangeStatus(value) {
       this.engineChangeStatus = value;
+    },
+    setSearchInputValue(value) {
+      this.searchInputValue = value;
     },
   },
 });

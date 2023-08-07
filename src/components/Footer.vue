@@ -13,5 +13,6 @@
   width: 100%;
   font-size: 14px;
   color: var(--main-text-color);
+  z-index: 1;
 }
 </style>

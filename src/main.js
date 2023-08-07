@@ -4,16 +4,14 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 // IconFont
 import SvgIcon from "@/components/SvgIcon.vue";
-import "@/utils/iconfont.js";
 // Notification
 import Notification from "@/components/Notification.vue";
-
 // 主组件
 import App from "@/App.vue";
-
 // 全局样式
 import "@/style/global.scss";
 
+// 根组件
 const app = createApp(App);
 
 // Pinia

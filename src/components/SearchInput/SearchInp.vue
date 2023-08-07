@@ -3,7 +3,7 @@
     <div
       v-if="status.siteStatus === 'focus'"
       class="mask"
-      @click="closeSearchInput"
+      @click="closeSearchInput(false)"
     />
     <div
       ref="searchAllRef"
@@ -29,12 +29,12 @@
         title="请输入搜索内容"
         autocomplete="false"
         :placeholder="inputTip"
-        v-model="inputValue"
+        v-model="status.searchInputValue"
         @focus="status.setSiteStatus('focus')"
         @click.stop="status.setEngineChangeStatus(false)"
         @keydown.stop="pressKeyboard"
       />
-      <div class="go" title="搜索" @click="toSearch(inputValue)">
+      <div class="go" title="搜索" @click="toSearch(status.searchInputValue)">
         <SvgIcon iconName="icon-search" className="search" />
       </div>
     </div>
@@ -43,7 +43,7 @@
     <!-- 搜索建议 -->
     <Suggestions
       ref="suggestionsRef"
-      :keyWord="inputValue"
+      :keyWord="status.searchInputValue"
       @toSearch="toSearch"
     />
   </div>
@@ -52,8 +52,8 @@
 <script setup>
 import { ref } from "vue";
 import { statusStore, setStore } from "@/stores";
-import SearchEngine from "@/components/SearchEngine.vue";
-import Suggestions from "@/components/Suggestions.vue";
+import SearchEngine from "@/components/SearchInput/SearchEngine.vue";
+import Suggestions from "@/components/SearchInput/Suggestions.vue";
 import defaultEngine from "@/assets/defaultEngine.json";
 
 const set = setStore();
@@ -66,17 +66,20 @@ const inputTip = import.meta.env.VITE_INPUT_TIP ?? "想要搜点什么";
 const searchAllRef = ref(null);
 const searchInputRef = ref(null);
 const inputClickable = ref(true);
-const inputValue = ref("");
 
 // 搜索建议子组件
 const suggestionsRef = ref(null);
 
 // 关闭搜索框
-const closeSearchInput = () => {
-  status.setSiteStatus("normal");
+const closeSearchInput = (check = false) => {
+  if (check && !set.autoInputBlur) {
+    status.setSiteStatus("focus");
+  } else {
+    status.setSearchInputValue("");
+    status.setSiteStatus("normal");
+    searchInputRef.value?.blur();
+  }
   status.setEngineChangeStatus(false);
-  searchInputRef.value?.blur();
-  inputValue.value = "";
 };
 
 // 前往搜索
@@ -84,9 +87,9 @@ const toSearch = (val, type = 1) => {
   const searchValue = val?.trim();
   // 定义跳转方法
   const jumpLink = (url) => {
-    if (set.urlJumpType === "open") {
+    if (set.urlJumpType === "href") {
       window.location.href = url;
-    } else if (set.urlJumpType === "href") {
+    } else if (set.urlJumpType === "open") {
       window.open(url, "_blank");
     }
   };
@@ -124,8 +127,11 @@ const toSearch = (val, type = 1) => {
       default:
         break;
     }
-    closeSearchInput();
+    closeSearchInput(true);
   } else {
+    if (status.siteStatus === "focus") {
+      $message.info("请输入搜索内容", { duration: 1500 });
+    }
     status.setSiteStatus("focus");
     searchInputRef.value?.focus();
   }
@@ -159,12 +165,13 @@ const changeEngine = () => {
 
 <style lang="scss" scoped>
 .search-input {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
   max-width: 680px;
   width: calc(100% - 60px);
+  transition: width 0.3s;
   .mask {
     position: fixed;
     top: 0;
@@ -186,7 +193,7 @@ const changeEngine = () => {
     backdrop-filter: blur(10px);
     opacity: 1;
     animation: fade-up-in 0.7s cubic-bezier(0.37, 0.99, 0.36, 1);
-    transition: transform 0.3s, background-color 0.3s;
+    transition: transform 0.3s, background-color 0.3s, opacity 0.5s;
     z-index: 1;
     &.focus {
       transform: translateY(-60px);

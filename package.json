@@ -1,7 +1,7 @@
 {
   "name": "snavigation",
   "private": true,
-  "version": "2.0.0 beta 2",
+  "version": "2.0.0 beta 3",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
@@ -21,6 +21,7 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "naive-ui": "^2.34.4",
     "terser": "^5.19.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

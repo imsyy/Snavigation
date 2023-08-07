@@ -11,6 +11,8 @@ const identifyInput = (input) => {
    */
   const urlRegex =
     /^(?:(?:(?:https?|ftp):\/\/)?(?:www\.)?)?([a-zA-Z0-9.-]+(?:\.[a-zA-Z]{2,})+)(?:\/[^\s]*)?(?:\?[^#\s]*)?(?:#[^\s]*)?$/;
+  const ipv4Regex =
+    /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
   /**
    * 邮箱正则
@@ -19,7 +21,7 @@ const identifyInput = (input) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   // 判断是否为网址
-  if (urlRegex.test(input)) return "url";
+  if (urlRegex.test(input) || ipv4Regex.test(input)) return "url";
 
   // 判断是否为邮件地址
   if (emailRegex.test(input)) return "email";

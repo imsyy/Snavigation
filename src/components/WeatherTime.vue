@@ -1,13 +1,17 @@
 <template>
-  <div
-    :class="
-      status.siteStatus !== 'normal' ? 'weather-time focus' : 'weather-time'
-    "
-    @click.stop
-  >
-    <div :class="['time', set.timeStyle]">
+  <div :class="`weather-time ${status.siteStatus}`" @click.stop>
+    <div
+      :class="['time', set.timeStyle]"
+      @click.stop="
+        status.setSiteStatus(
+          status.siteStatus !== 'normal' && status.siteStatus !== 'focus'
+            ? 'normal'
+            : 'box'
+        )
+      "
+    >
       <span class="hour">{{ timeData.hour ?? "00" }}</span>
-      <span class="separator">:</span>
+      <span class="separator" :key="set.showSeconds">:</span>
       <span class="minute">{{ timeData.minute ?? "00" }}</span>
       <template v-if="set.showSeconds">
         <span class="separator">:</span>
@@ -120,6 +124,10 @@ onBeforeUnmount(() => {
   &.focus {
     transform: translateY(-180px);
   }
+  &.box,
+  &.set {
+    transform: translateY(-220px);
+  }
   .time {
     cursor: pointer;
     font-size: 3rem;
@@ -160,8 +168,7 @@ onBeforeUnmount(() => {
     }
   }
   .weather {
-    margin-top: 6px;
-    opacity: 0.8;
+    opacity: 0.7;
     font-size: 1rem;
     text-shadow: var(--main-text-shadow);
     .temperature {

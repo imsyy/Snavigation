@@ -12,6 +12,8 @@ const useStatusDataStore = defineStore("statusData", {
       engineChangeStatus: false,
       // 搜索框文本
       searchInputValue: "",
+      // 盒子大小
+      mainBoxBig: false,
     };
   },
   getters: {},
@@ -19,9 +21,10 @@ const useStatusDataStore = defineStore("statusData", {
     setImgLoadStatus(value) {
       this.imgLoadStatus = value;
     },
-    setSiteStatus(value) {
+    setSiteStatus(value, alsoChange = true) {
       this.siteStatus = value;
       this.searchInputValue = "";
+      if (alsoChange) this.engineChangeStatus = false;
     },
     setEngineChangeStatus(value) {
       this.engineChangeStatus = value;
@@ -29,6 +32,15 @@ const useStatusDataStore = defineStore("statusData", {
     setSearchInputValue(value) {
       this.searchInputValue = value;
     },
+    setMainBoxBig(value) {
+      this.mainBoxBig = value;
+    },
+  },
+  // 开启数据持久化
+  persist: {
+    key: "statusData",
+    storage: window.localStorage,
+    paths: ["mainBoxBig"],
   },
 });
 

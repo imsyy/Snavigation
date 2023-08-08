@@ -1,10 +1,18 @@
 <template>
+  <!-- 搜索框 -->
   <div class="search-input" @click.stop>
+    <!-- 搜索框遮罩 -->
     <div
       v-if="status.siteStatus === 'focus'"
       class="mask"
       @click="closeSearchInput(false)"
+      @contextmenu.stop="
+        (event) => {
+          event.preventDefault();
+        }
+      "
     />
+    <!-- 主搜索框 -->
     <div
       ref="searchAllRef"
       :class="status.siteStatus === 'focus' ? 'all focus' : 'all'"
@@ -38,7 +46,7 @@
         <SvgIcon iconName="icon-search" className="search" />
       </div>
     </div>
-    <!-- 搜索引擎 -->
+    <!-- 搜索引擎切换 -->
     <SearchEngine />
     <!-- 搜索建议 -->
     <Suggestions
@@ -158,8 +166,9 @@ const pressKeyboard = (event) => {
 
 // 更换搜索引擎
 const changeEngine = () => {
-  status.setSiteStatus("focus");
+  status.setSiteStatus("focus", false);
   status.setEngineChangeStatus(!status.engineChangeStatus);
+  console.log(status.engineChangeStatus);
 };
 </script>
 

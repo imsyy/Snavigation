@@ -20,25 +20,41 @@
         <!-- 状态切换 -->
         <Transition name="fade">
           <div
+            class="all-controls"
             v-show="
               status.siteStatus !== 'focus' && status.siteStatus !== 'normal'
             "
-            class="change-status"
-            :title="status.siteStatus !== 'set' ? '设置' : '首页'"
-            @click.stop="
-              status.setSiteStatus(
-                status.siteStatus !== 'set' ? 'set' : 'normal'
-              )
-            "
           >
-            <Transition name="fade" mode="out-in">
-              <SvgIcon
-                :iconName="`icon-${
-                  status.siteStatus !== 'set' ? 'setting' : 'home'
-                }`"
-                :key="status.siteStatus !== 'set' ? 'setting' : 'home'"
-              />
-            </Transition>
+            <div
+              class="change-status"
+              :title="status.mainBoxBig ? '收起' : '展开'"
+              @click.stop="status.setMainBoxBig(!status.mainBoxBig)"
+            >
+              <Transition name="fade" mode="out-in">
+                <SvgIcon
+                  :iconName="`icon-${status.mainBoxBig ? 'packup' : 'unfold'}`"
+                  :key="status.mainBoxBig ? 'packup' : 'unfold'"
+                />
+              </Transition>
+            </div>
+            <div
+              class="change-status"
+              :title="status.siteStatus !== 'set' ? '设置' : '首页'"
+              @click.stop="
+                status.setSiteStatus(
+                  status.siteStatus !== 'set' ? 'set' : 'normal'
+                )
+              "
+            >
+              <Transition name="fade" mode="out-in">
+                <SvgIcon
+                  :iconName="`icon-${
+                    status.siteStatus !== 'set' ? 'setting' : 'home'
+                  }`"
+                  :key="status.siteStatus !== 'set' ? 'setting' : 'home'"
+                />
+              </Transition>
+            </div>
           </div>
         </Transition>
         <!-- Notification -->
@@ -122,7 +138,7 @@ const mainPressKeyboard = (event) => {
   &.main-set {
     .main-box {
       opacity: 1;
-      margin-top: 200px;
+      margin-top: 220px;
       transform: scale(1);
       visibility: visible;
     }
@@ -134,26 +150,34 @@ const mainPressKeyboard = (event) => {
       }
     }
   }
-  .change-status {
-    cursor: pointer;
+  .all-controls {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    width: 100%;
+    top: 0;
+    padding: 10px;
     display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    padding: 8px;
-    border-radius: 8px;
-    color: var(--main-text-color);
-    z-index: 1;
-    transition: opacity 0.3s, background-color 0.3s, transform 0.3s;
-    &:hover {
-      backdrop-filter: blur(20px);
-      background-color: var(--main-background-light-color);
-    }
-    &:active {
-      transform: scale(0.95);
+    justify-content: space-between;
+    box-sizing: border-box;
+    .change-status {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      padding: 8px;
+      border-radius: 8px;
+      color: var(--main-text-color);
+      z-index: 1;
+      transition: opacity 0.3s, background-color 0.3s, transform 0.3s;
+      &:hover {
+        backdrop-filter: blur(20px);
+        background-color: var(--main-background-light-color);
+      }
+      &:active {
+        transform: scale(0.95);
+      }
     }
   }
 }

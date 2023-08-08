@@ -2,8 +2,14 @@
   <Transition name="fadeDown" mode="out-in">
     <div v-if="status.engineChangeStatus" class="engine-choose">
       <n-scrollbar style="max-height: 44.5vh">
-        <div class="all-engine">
-          <div
+        <n-grid
+          class="all-engine"
+          responsive="screen"
+          cols="2 s:3 m:4 l:4"
+          :x-gap="10"
+          :y-gap="10"
+        >
+          <n-grid-item
             v-for="(item, key) in defaultEngine"
             :key="key"
             :class="['engine', key === set.searchEngine ? 'choose' : null]"
@@ -11,19 +17,19 @@
           >
             <SvgIcon :iconName="`icon-${key}`" />
             <span class="name">{{ item.name }}</span>
-          </div>
-          <div class="engine" @click="customEngine">
+          </n-grid-item>
+          <n-grid-item class="engine" @click="customEngine">
             <SvgIcon iconName="icon-custom" />
             <span class="name">自定义</span>
-          </div>
-        </div>
+          </n-grid-item>
+        </n-grid>
       </n-scrollbar>
     </div>
   </Transition>
 </template>
 
 <script setup>
-import { NScrollbar } from "naive-ui";
+import { NScrollbar, NGrid, NGridItem } from "naive-ui";
 import { statusStore, setStore } from "@/stores";
 import defaultEngine from "@/assets/defaultEngine.json";
 
@@ -60,11 +66,10 @@ const customEngine = () => {
   z-index: 1;
   .all-engine {
     padding: 10px;
-    display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(4, minmax(0px, 1fr));
+    box-sizing: border-box;
     .engine {
       cursor: pointer;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -87,10 +92,24 @@ const customEngine = () => {
       }
       &.choose {
         background-color: var(--main-background-hover-color);
+        &::before {
+          content: "";
+          position: absolute;
+          border-radius: 14px;
+          top: -4px;
+          left: -4px;
+          right: -4px;
+          bottom: -4px;
+          border: 2px solid var(--main-background-hover-color);
+          transition: opacity 0.3s;
+        }
       }
       &:hover {
         background-color: var(--main-background-hover-color);
         box-shadow: 0 0 0px 2px var(--main-background-hover-color);
+        &::before {
+          opacity: 0;
+        }
       }
       &:active {
         box-shadow: none;

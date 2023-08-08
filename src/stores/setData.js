@@ -6,6 +6,7 @@ const useSetDataStore = defineStore("setData", {
       // 壁纸类别
       // 0 本地 / 1 必应 / 2 随机风景 / 3 随机动漫 / 4 自定义
       backgroundType: 2,
+      backgroundCustom: "",
       // 壁纸遮罩
       showBackgroundGray: true,
       // 搜索引擎
@@ -35,6 +36,23 @@ const useSetDataStore = defineStore("setData", {
       this.lastSearchEngine = this.searchEngine;
       // 设置新引擎
       this.searchEngine = value;
+    },
+    // 恢复数据
+    recoverSiteData(data) {
+      let isSuccess = false;
+      try {
+        for (const key in data) {
+          if (Object.hasOwnProperty.call(data, key)) {
+            const item = data[key];
+            this[key] = item;
+          }
+        }
+        isSuccess = true;
+      } catch (error) {
+        console.error("站点数据恢复时处理失败：", error);
+        isSuccess = false;
+      }
+      return isSuccess;
     },
   },
   // 开启数据持久化

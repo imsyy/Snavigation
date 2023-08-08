@@ -1,5 +1,17 @@
 <template>
-  <div :class="`weather-time ${status.siteStatus}`" @click.stop>
+  <!-- 天气时钟 -->
+  <div
+    :class="[
+      'weather-time',
+      status.siteStatus,
+      status.mainBoxBig &&
+      status.siteStatus !== 'normal' &&
+      status.siteStatus !== 'focus'
+        ? 'hidden'
+        : null,
+    ]"
+    @click.stop
+  >
     <div
       :class="['time', set.timeStyle]"
       @click.stop="
@@ -119,7 +131,7 @@ onBeforeUnmount(() => {
   transform: translateY(-140px);
   color: var(--main-text-color);
   animation: fade-time-in 0.6s cubic-bezier(0.21, 0.78, 0.36, 1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, opacity 0.5s;
   z-index: 1;
   &.focus {
     transform: translateY(-180px);
@@ -127,6 +139,10 @@ onBeforeUnmount(() => {
   &.box,
   &.set {
     transform: translateY(-220px);
+  }
+  &.hidden {
+    transform: translateY(-180px);
+    opacity: 0;
   }
   .time {
     cursor: pointer;

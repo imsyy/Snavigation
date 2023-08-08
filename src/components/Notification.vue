@@ -1,5 +1,5 @@
-<!-- 自定义通知组件 -->
 <template>
+  <!-- 自定义通知组件 -->
   <Teleport to="body">
     <Transition name="fade">
       <div
@@ -11,6 +11,7 @@
         <Transition name="fadeDown">
           <div v-if="notiShow" :class="['notification-content', notiType]">
             <div class="header">
+              <SvgIcon iconName="icon-info" />
               <div class="title" v-html="notiTitle" />
             </div>
             <div class="content" v-html="notiContent" />
@@ -49,13 +50,13 @@ const allNoti = {
       return console.error("Noti:请传入必要数据");
     }
     // 获取配置
-    const { title, content, clickVerify, ClickCancel } = options;
+    const { title, content, clickVerify, clickCancel } = options;
     if (!title || !content) return console.error("Noti:参数错误或不完整");
     // 更改数据
     notiTitle.value = title;
     notiContent.value = content;
     notiClickVerify.value = clickVerify;
-    notiClickCancel.value = ClickCancel;
+    notiClickCancel.value = clickCancel;
     notizIndex.value = findMaxZIndex();
     notiShow.value = true;
   },
@@ -120,14 +121,23 @@ onMounted(() => {
     border-radius: 8px;
     color: var(--main-text-color);
     background-color: var(--main-background-light-color);
+    box-shadow: var(--main-box-shadow);
     z-index: 1;
     .header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       padding: 20px;
       font-weight: bold;
-      font-size: 20px;
+      font-size: 18px;
+      .i-icon {
+        font-size: 24px;
+        margin-right: 8px;
+      }
     }
     .content {
       padding: 0 20px;
+      font-size: 15px;
     }
     .actions {
       display: flex;
@@ -142,6 +152,7 @@ onMounted(() => {
         border-radius: 8px;
         outline: none;
         border: none;
+        font-family: "HarmonyOS_Regular", sans-serif;
         background-color: var(--main-background-light-color);
         color: var(--main-text-color);
         transition: background-color 0.3s;

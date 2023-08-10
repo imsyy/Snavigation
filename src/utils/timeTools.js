@@ -2,7 +2,7 @@
  * 获取当前时间
  * @returns {Object} 时间对象
  */
-export const getCurrentTime = () => {
+export const getCurrentTime = (ShowZero = true) => {
   const time = new Date();
   // 格式化
   const formatTime = (value) => (value < 10 ? "0" + value : value);
@@ -10,7 +10,7 @@ export const getCurrentTime = () => {
   const year = time.getFullYear();
   const month = time.getMonth() + 1;
   const day = formatTime(time.getDate());
-  const hour = formatTime(time.getHours());
+  const hour = ShowZero ? formatTime(time.getHours()) : time.getHours();
   const minute = formatTime(time.getMinutes());
   const second = formatTime(time.getSeconds());
   const weekdayArr = ["日", "一", "二", "三", "四", "五", "六"];

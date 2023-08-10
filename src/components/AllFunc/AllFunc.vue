@@ -44,6 +44,13 @@ const status = statusStore();
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+      .desc {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
       .name {
         display: flex;
         flex-direction: column;

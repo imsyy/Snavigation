@@ -23,7 +23,7 @@ const useStatusDataStore = defineStore("statusData", {
     },
     setSiteStatus(value, alsoChange = true) {
       this.siteStatus = value;
-      this.searchInputValue = "";
+      if (value !== "focus") this.searchInputValue = "";
       if (alsoChange) this.engineChangeStatus = false;
     },
     setEngineChangeStatus(value) {

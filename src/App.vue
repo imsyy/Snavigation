@@ -57,8 +57,6 @@
             </div>
           </div>
         </Transition>
-        <!-- Notification -->
-        <Notification />
       </main>
       <div v-else id="loading">
         <img src="/icon/logo.png" alt="logo" class="logo" />

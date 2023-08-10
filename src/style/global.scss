@@ -32,6 +32,13 @@ body {
   height: 100vh;
 }
 
+// NButton
+.n-button {
+  background-color: var(--main-background-light-color);
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
 // NMessage
 .n-message-container {
   top: 20px !important;
@@ -79,6 +86,46 @@ body {
 .n-scrollbar {
   .n-scrollbar-rail {
     right: 0 !important;
+  }
+}
+
+// NModal
+.n-modal-container {
+  .n-modal-mask {
+    backdrop-filter: blur(40px);
+  }
+  // n-dialog
+  .n-dialog {
+    border-radius: 8px;
+    --n-icon-color: var(--main-text-color);
+    --n-color: var(--main-background-light-color);
+    .n-dialog__title {
+      font-weight: bold;
+      font-size: 18px;
+      .n-dialog__icon {
+        font-size: 24px;
+        margin-right: 8px;
+      }
+    }
+    .n-dialog__content {
+      font-size: 15px;
+    }
+    .n-button {
+      height: auto;
+      padding: 9px 16px;
+      transition: background-color 0.3s;
+      --n-border: none;
+      --n-border-hover: none;
+      --n-border-focus: none;
+      --n-border-pressed: none;
+      --n-text-color-pressed: var(--main-text-color);
+      --n-color-pressed: var(--main-background-hover-color);
+      --n-text-color: var(--main-text-color);
+      --n-text-color-hover: var(--main-text-color);
+      --n-color-focus: var(--main-background-hover-color);
+      --n-text-color-focus: var(--main-text-color);
+      --n-color-hover: var(--main-background-hover-color);
+    }
   }
 }
 

@@ -12,7 +12,7 @@
     "icon": "bing"
   },
   "google": {
-    "name": "谷歌",
+    "name": "Google",
     "url": "https://www.google.com/search?q=",
     "translation": "https://translate.google.com/?text=",
     "icon": "google"

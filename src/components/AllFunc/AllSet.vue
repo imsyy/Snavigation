@@ -7,9 +7,28 @@
           class="set-item cover"
           :content-style="{ flexDirection: 'column', alignItems: 'flex-start' }"
         >
-          <div class="name">
-            <span class="title">壁纸偏好</span>
-            <span class="tip">设置站点背景图片</span>
+          <div class="desc">
+            <div class="name">
+              <span class="title">壁纸偏好</span>
+              <span class="tip"
+                >除默认以外的其他选项可能会导致页面载入缓慢</span
+              >
+            </div>
+            <n-space>
+              <Transition name="fade" mode="out-in">
+                <n-button
+                  v-if="backgroundType !== 0"
+                  strong
+                  secondary
+                  @click="changeBackground(0, true)"
+                >
+                  恢复默认
+                </n-button>
+              </Transition>
+              <n-button strong secondary @click="customCover">
+                自定义
+              </n-button>
+            </n-space>
           </div>
           <n-grid
             class="cover-selete"
@@ -85,6 +104,13 @@
           </div>
           <n-switch v-model:value="showSeconds" :round="false" />
         </n-card>
+        <n-card class="set-item">
+          <div class="name">
+            <span class="title">时钟显零</span>
+            <span class="tip">是否在时钟小于 10 时补 0</span>
+          </div>
+          <n-switch v-model:value="showZeroTime" :round="false" />
+        </n-card>
         <n-h6 prefix="bar"> 搜索框 </n-h6>
         <n-card class="set-item">
           <div class="name">
@@ -143,10 +169,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { h, ref } from "vue";
 import {
   NTabs,
   NTabPane,
+  NSpace,
   NCard,
   NSwitch,
   NSelect,
@@ -167,6 +194,7 @@ const {
   autoFocus,
   autoInputBlur,
   showSeconds,
+  showZeroTime,
   showSuggestions,
   urlJumpType,
 } = storeToRefs(set);
@@ -181,9 +209,32 @@ const backgroundTypeArr = [
 ];
 
 // 切换壁纸
-const changeBackground = (type) => {
+const changeBackground = (type, reset = false) => {
+  if (reset) {
+    $dialog.warning({
+      title: "壁纸恢复",
+      content: "确认恢复默认壁纸？若当前为自定义壁纸，你的自定义壁纸将丢失！",
+      positiveText: "恢复",
+      negativeText: "取消",
+      onPositiveClick: () => {
+        backgroundType.value = 0;
+        $message.info("已恢复为默认壁纸，刷新后生效");
+      },
+    });
+    return;
+  }
   backgroundType.value = type;
-  $message.success("壁纸设置成功，刷新后生效");
+  $message.success(`已切换为${backgroundTypeArr[type].name}，刷新后生效`);
+};
+
+// 自定义壁纸
+const customCover = () => {
+  $dialog.warning({
+    title: "警告",
+    content: "你确定？",
+    positiveText: "确定",
+    negativeText: "不确定",
+  });
 };
 
 // 链接跳转方式
@@ -200,10 +251,12 @@ const urlJumpTypeOptions = [
 
 // 站点重置
 const resetSite = () => {
-  $noti.dialog({
+  $dialog.warning({
     title: "站点重置",
     content: "确认重置站点为默认状态？你的全部数据以及自定义设置都将丢失！",
-    clickVerify: () => {
+    positiveText: "重置",
+    negativeText: "取消",
+    onPositiveClick: () => {
       localStorage.clear();
       $message.info("站点重置成功，即将刷新");
       setTimeout(() => {
@@ -250,11 +303,13 @@ const recoverSite = async () => {
     const jsonData = await file.text();
     const data = JSON.parse(jsonData);
     // 恢复数据
-    $noti.dialog({
+    $dialog.warning({
       title: "站点恢复",
       content: "确认使用该恢复文件？你现有的数据以及自定义设置都将被覆盖！",
-      clickVerify: () => {
-        const isSuccess = set.recoverSiteData(data);
+      positiveText: "恢复",
+      negativeText: "取消",
+      onPositiveClick: async () => {
+        const isSuccess = await set.recoverSiteData(data);
         if (isSuccess) {
           $message.info("站点恢复成功，即将刷新");
           setTimeout(() => {
@@ -264,7 +319,7 @@ const recoverSite = async () => {
           $message.error("站点数据恢复失败，请重试");
         }
       },
-      clickCancel: () => {
+      onNegativeClick: () => {
         recoverRef.value.value = null;
       },
     });
@@ -286,7 +341,7 @@ const recoverSite = async () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: var(--main-background-light-color);
     transition: background-color 0.3s, box-shadow 0.3s;
     &.check {
@@ -294,7 +349,7 @@ const recoverSite = async () => {
       &::before {
         content: "";
         position: absolute;
-        border-radius: 14px;
+        border-radius: 12px;
         top: -4px;
         left: -4px;
         right: -4px;

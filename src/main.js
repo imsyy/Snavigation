@@ -4,8 +4,6 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
 // IconFont
 import SvgIcon from "@/components/SvgIcon.vue";
-// Notification
-import Notification from "@/components/Notification.vue";
 // 主组件
 import App from "@/App.vue";
 // 全局样式
@@ -20,6 +18,5 @@ pinia.use(piniaPluginPersistedstate);
 
 // 挂载
 app.use(pinia);
-app.component("Notification", Notification);
 app.component("SvgIcon", SvgIcon);
 app.mount("#app");

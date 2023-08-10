@@ -168,7 +168,6 @@ const pressKeyboard = (event) => {
 const changeEngine = () => {
   status.setSiteStatus("focus", false);
   status.setEngineChangeStatus(!status.engineChangeStatus);
-  console.log(status.engineChangeStatus);
 };
 </script>
 

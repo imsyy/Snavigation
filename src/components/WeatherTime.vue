@@ -65,7 +65,7 @@ const weatherData = ref({});
 
 // 更新时间
 const updateTimeData = () => {
-  timeData.value = getCurrentTime();
+  timeData.value = getCurrentTime(set.showZeroTime);
 };
 
 // 获取天气数据

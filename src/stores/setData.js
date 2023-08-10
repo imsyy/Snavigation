@@ -23,6 +23,8 @@ const useSetDataStore = defineStore("setData", {
       timeStyle: "one",
       // 是否显秒
       showSeconds: false,
+      // 是否显零
+      showZeroTime: true,
       // 是否显示搜索建议
       showSuggestions: true,
       // 跳转方式

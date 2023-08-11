@@ -189,6 +189,7 @@ const keyboardEvents = (keyCode, event) => {
       toSearch(mainInput.value, 1);
     }
   } catch (error) {
+    $message.error("出现问题，请尝试重置程序");
     console.error("键盘事件出现错误：" + error);
   }
 };

@@ -97,6 +97,7 @@ body {
   // n-dialog
   .n-dialog {
     border-radius: 8px;
+    box-shadow: none;
     --n-icon-color: var(--main-text-color);
     --n-color: var(--main-background-light-color);
     .n-dialog__title {
@@ -126,6 +127,14 @@ body {
       --n-text-color-focus: var(--main-text-color);
       --n-color-hover: var(--main-background-hover-color);
     }
+  }
+  .n-modal {
+    width: 60vw;
+    max-width: 700px;
+    min-width: min(24rem, 100vw);
+    border-radius: 8px;
+    box-shadow: none;
+    --n-color-modal: var(--main-background-light-color);
   }
 }
 

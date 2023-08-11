@@ -28,50 +28,60 @@ const status = statusStore();
   border-radius: 8px;
   transition: opacity 0.3s, transform 0.3s, margin-top 0.3s, height 0.3s;
   z-index: 2;
-
-  :deep(.scrollbar) {
-    max-height: calc(460px - 84px);
-  }
-  :deep(.set-item) {
-    width: 100%;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    border: none;
-    box-shadow: var(--main-box-shadow);
-    --n-color: var(--main-background-light-color);
-    .n-card__content {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      .desc {
+  .all {
+    overflow: hidden;
+    height: 100%;
+    :deep(.scrollbar) {
+      max-height: calc(460px - 84px);
+    }
+    :deep(.set-item) {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: none;
+      box-shadow: var(--main-box-shadow);
+      --n-color: var(--main-background-light-color);
+      .n-card__content {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        width: 100%;
-      }
-      .name {
-        display: flex;
-        flex-direction: column;
-        .title {
-          font-size: 16px;
+        .desc {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          @media (max-width: 720px) {
+            flex-direction: column;
+            align-items: flex-start;
+            .name {
+              margin-bottom: 8px;
+            }
+          }
         }
-        .tip {
-          font-size: 13px;
-          opacity: 0.8;
+        .name {
+          display: flex;
+          flex-direction: column;
+          .title {
+            font-size: 16px;
+          }
+          .tip {
+            font-size: 13px;
+            opacity: 0.8;
+          }
+        }
+        .set {
+          width: 200px;
+          @media (max-width: 768px) {
+            width: 140px;
+            min-width: 140px;
+          }
         }
       }
-      .set {
-        width: 200px;
-        @media (max-width: 768px) {
-          width: 140px;
-          min-width: 140px;
-        }
+      &:last-child {
+        margin-bottom: 0;
       }
-    }
-    &:last-child {
-      margin-bottom: 0;
     }
   }
   &.big {

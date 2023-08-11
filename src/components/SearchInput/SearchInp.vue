@@ -23,7 +23,11 @@
       <div class="engine" title="切换搜索引擎" @click="changeEngine">
         <Transition name="fade" mode="out-in">
           <SvgIcon
-            :iconName="`icon-${defaultEngine[set.searchEngine].icon}`"
+            :iconName="`icon-${
+              set.searchEngine !== 'custom'
+                ? defaultEngine[set.searchEngine]?.icon
+                : 'custom'
+            }`"
             :key="set.searchEngine"
           />
         </Transition>
@@ -108,8 +112,12 @@ const toSearch = (val, type = 1) => {
     switch (type) {
       // 默认搜索
       case 1:
-        const engine = defaultEngine[set.searchEngine];
-        jumpLink(engine.url + searchFormat);
+        if (set.searchEngine !== "custom") {
+          const engine = defaultEngine[set.searchEngine];
+          jumpLink(engine?.url + searchFormat);
+        } else {
+          jumpLink(set.customEngineUrl + searchFormat);
+        }
         break;
       // 快捷翻译
       case 2:

@@ -12,7 +12,7 @@ const useSetDataStore = defineStore("setData", {
       // 搜索引擎
       searchEngine: "bing",
       lastSearchEngine: "bing",
-      customEngine: {},
+      customEngineUrl: "",
       // 清空搜索框
       showCleanInput: true,
       // 搜索框自动 focus
@@ -33,10 +33,17 @@ const useSetDataStore = defineStore("setData", {
     };
   },
   actions: {
-    setSearchEngine(value) {
+    setSearchEngine(value, custom = false) {
       // 储存上次
-      this.lastSearchEngine = this.searchEngine;
+      if (this.searchEngine !== "custom") {
+        this.lastSearchEngine = this.searchEngine;
+      }
       // 设置新引擎
+      if (custom) {
+        this.customEngineUrl = value;
+        this.searchEngine = "custom";
+        return;
+      }
       this.searchEngine = value;
     },
     // 恢复数据

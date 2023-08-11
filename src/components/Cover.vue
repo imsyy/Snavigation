@@ -46,7 +46,11 @@ const setBgUrl = () => {
     case 3:
       bgUrl.value = "https://api.aixiaowai.cn/api/api.php";
       break;
+    case 4:
+      bgUrl.value = set.backgroundCustom;
+      break;
     default:
+      bgUrl.value = `/background/bg${bgRandom}.jpg`;
       break;
   }
 };
@@ -68,7 +72,7 @@ const imgAnimationEnd = () => {
 // 图片显示失败
 const imgLoadError = () => {
   bgUrl.value = `/background/bg${bgRandom}.jpg`;
-  console.error("图片加载失败：", bgUrl.value);
+  console.error("壁纸加载失败：", bgUrl.value);
   $message.error("壁纸加载失败，已临时切换回默认");
 };
 

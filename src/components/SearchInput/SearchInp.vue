@@ -1,6 +1,13 @@
 <template>
   <!-- 搜索框 -->
-  <div class="search-input" @click.stop>
+  <div
+    :class="[
+      'search-input',
+      set.smallInput ? 'small' : null,
+      status.siteStatus === 'focus' ? 'focus' : null,
+    ]"
+    @click.stop
+  >
     <!-- 搜索框遮罩 -->
     <div
       v-if="status.siteStatus === 'focus'"
@@ -14,8 +21,8 @@
     />
     <!-- 主搜索框 -->
     <div
+      class="all"
       ref="searchAllRef"
-      :class="status.siteStatus === 'focus' ? 'all focus' : 'all'"
       :style="{ pointerEvents: inputClickable ? 'none' : 'auto' }"
       @animationstart="inputClickable = true"
       @animationend="inputAnimationEnd"
@@ -187,7 +194,7 @@ const changeEngine = () => {
   align-items: center;
   max-width: 680px;
   width: calc(100% - 60px);
-  transition: width 0.3s;
+  transition: width 0.35s linear;
   .mask {
     position: fixed;
     top: 0;
@@ -211,21 +218,6 @@ const changeEngine = () => {
     animation: fade-up-in 0.7s cubic-bezier(0.37, 0.99, 0.36, 1);
     transition: transform 0.3s, background-color 0.3s, opacity 0.5s;
     z-index: 1;
-    &.focus {
-      transform: translateY(-60px);
-      background-color: var(--main-input-hover-color);
-      .input {
-        color: var(--main-text-hover-color);
-        &::placeholder {
-          opacity: 0;
-        }
-      }
-      .engine,
-      .go,
-      .delete {
-        color: var(--main-text-hover-color);
-      }
-    }
     .input {
       display: flex;
       justify-content: center;
@@ -239,6 +231,7 @@ const changeEngine = () => {
       font-size: 16px;
       color: var(--main-text-color);
       &::placeholder {
+        width: 100%;
         text-align: center;
         transform: translateY(1px);
         color: var(--main-text-color);
@@ -256,12 +249,61 @@ const changeEngine = () => {
       width: 64px;
       font-size: 20px;
       border-radius: 30px;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, opacity 0.3s;
       &:hover {
         background-color: var(--main-background-color);
       }
       @media (max-width: 520px) {
         font-size: 18px;
+      }
+    }
+  }
+  &.small {
+    width: 240px;
+    .all {
+      .engine,
+      .go {
+        opacity: 0;
+      }
+      .input {
+        &::placeholder {
+          opacity: 0.3;
+        }
+      }
+      &.focus {
+        .engine,
+        .go {
+          opacity: 1;
+        }
+      }
+    }
+    &:hover {
+      width: calc(100% - 60px);
+      .all {
+        .input {
+          &::placeholder {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  &.focus {
+    width: calc(100% - 60px);
+    .all {
+      transform: translateY(-60px);
+      background-color: var(--main-input-hover-color);
+      .input {
+        color: var(--main-text-hover-color);
+        &::placeholder {
+          opacity: 0;
+        }
+      }
+      .engine,
+      .go,
+      .delete {
+        opacity: 1;
+        color: var(--main-text-hover-color);
       }
     }
   }

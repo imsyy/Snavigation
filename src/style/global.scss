@@ -71,6 +71,9 @@ body {
     .n-tab-pane {
       padding: 20px;
       box-sizing: border-box;
+      &.no-padding {
+        padding: 0;
+      }
     }
   }
 }
@@ -136,6 +139,13 @@ body {
     box-shadow: none;
     --n-color-modal: var(--main-background-light-color);
   }
+}
+
+// NDropdown
+.n-dropdown {
+  --n-border-radius: 8px !important;
+  --n-color: var(--main-background-light-color) !important;
+  backdrop-filter: blur(10px);
 }
 
 // Transition 动画
@@ -206,12 +216,12 @@ body {
 
 @keyframes fade-blur-in {
   from {
-    filter: blur(20px) brightness(0.4);
-    transform: scale(1.2);
+    filter: blur(calc(var(--blur) + 20px)) brightness(0.4);
+    transform: scale(1.5);
   }
   to {
-    filter: blur(0) brightness(1);
-    transform: scale(1);
+    filter: blur(var(--blur)) brightness(1);
+    transform: scale(1.2);
   }
 }
 

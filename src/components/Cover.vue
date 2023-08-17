@@ -5,6 +5,7 @@
       class="background"
       alt="background"
       :src="bgUrl"
+      :style="{ '--blur': set.backgroundBlur + 'px' }"
       @load="imgLoadComplete"
       @error.once="imgLoadError"
       @animationend="imgAnimationEnd"
@@ -71,9 +72,9 @@ const imgAnimationEnd = () => {
 
 // 图片显示失败
 const imgLoadError = () => {
-  bgUrl.value = `/background/bg${bgRandom}.jpg`;
   console.error("壁纸加载失败：", bgUrl.value);
   $message.error("壁纸加载失败，已临时切换回默认");
+  bgUrl.value = `/background/bg${bgRandom}.jpg`;
 };
 
 onMounted(() => {
@@ -93,8 +94,8 @@ onBeforeUnmount(() => {
   background-color: var(--body-background-color);
   &.focus {
     .background {
-      filter: blur(10px) brightness(0.8);
-      transform: scale(1.1);
+      filter: blur(calc(var(--blur) + 10px)) brightness(0.8);
+      transform: scale(1.3);
     }
   }
   .background {
@@ -105,6 +106,8 @@ onBeforeUnmount(() => {
     height: 100%;
     object-fit: cover;
     backface-visibility: hidden;
+    transform: scale(1.2);
+    filter: blur(var(--blur));
     transition: filter 0.3s, transform 0.3s;
     animation: fade-blur-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }

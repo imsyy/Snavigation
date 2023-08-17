@@ -1,5 +1,5 @@
 <template>
-  <div class="all">
+  <div class="all-set">
     <n-tabs class="set" size="large" justify-content="space-evenly" animated>
       <n-tab-pane name="main" tab="基础设置">
         <n-scrollbar class="scrollbar">
@@ -103,8 +103,40 @@
             </div>
             <n-switch v-model:value="showBackgroundGray" :round="false" />
           </n-card>
+          <n-card class="set-item">
+            <div class="name">
+              <span class="title">壁纸模糊</span>
+              <span class="tip">调整壁纸高斯模糊的程度</span>
+            </div>
+            <n-slider
+              class="set"
+              v-model:value="backgroundBlur"
+              :step="0.01"
+              :min="0"
+              :max="10"
+              :tooltip="false"
+            />
+          </n-card>
           <n-h6 prefix="bar"> 天气与时间 </n-h6>
           <n-card class="set-item">
+            <div class="name">
+              <span class="title">天气显示</span>
+              <span class="tip">是否在首页时间下展示天气</span>
+            </div>
+            <n-switch v-model:value="showWeather" :round="false" />
+          </n-card>
+          <n-card class="set-item">
+            <div class="name">
+              <span class="title">时钟样式</span>
+              <span class="tip">选择一种时钟样式</span>
+            </div>
+            <n-select
+              class="set"
+              v-model:value="timeStyle"
+              :options="timeStyleOptions"
+            />
+          </n-card>
+          <n-card v-if="timeStyle === 'one'" class="set-item">
             <div class="name">
               <span class="title">时间显秒</span>
               <span class="tip">是否在分钟后面显示秒数</span>
@@ -118,7 +150,26 @@
             </div>
             <n-switch v-model:value="showZeroTime" :round="false" />
           </n-card>
+          <n-card class="set-item">
+            <div class="name">
+              <span class="title">显示农历</span>
+            </div>
+            <n-switch v-model:value="showLunar" :round="false" />
+          </n-card>
+          <n-card class="set-item">
+            <div class="name">
+              <span class="title">12 小时制</span>
+            </div>
+            <n-switch v-model:value="use12HourFormat" :round="false" />
+          </n-card>
           <n-h6 prefix="bar"> 搜索框 </n-h6>
+          <n-card class="set-item">
+            <div class="name">
+              <span class="title">自动收缩</span>
+              <span class="tip">是否在非搜索状态时收起搜索框</span>
+            </div>
+            <n-switch v-model:value="smallInput" :round="false" />
+          </n-card>
           <n-card class="set-item">
             <div class="name">
               <span class="title">自动聚焦</span>
@@ -220,6 +271,7 @@ import {
   NForm,
   NFormItem,
   NInput,
+  NSlider,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { setStore, statusStore } from "@/stores";
@@ -231,12 +283,18 @@ const {
   backgroundType,
   backgroundCustom,
   showBackgroundGray,
+  backgroundBlur,
+  smallInput,
   autoFocus,
   autoInputBlur,
+  showLunar,
+  showWeather,
   showSeconds,
   showZeroTime,
+  use12HourFormat,
   showSuggestions,
   urlJumpType,
+  timeStyle,
 } = storeToRefs(set);
 const recoverRef = ref(null);
 const customCoverModal = ref(false);
@@ -278,6 +336,18 @@ const urlJumpTypeOptions = [
   {
     label: "当前页打开",
     value: "href",
+  },
+];
+
+// 时钟样式
+const timeStyleOptions = [
+  {
+    label: "横向排布",
+    value: "one",
+  },
+  {
+    label: "竖向排布",
+    value: "two",
   },
 ];
 

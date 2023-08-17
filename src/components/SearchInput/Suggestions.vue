@@ -135,7 +135,7 @@ const keywordsSearch = debounce((val) => {
         // 写入结果
         searchSuggestionsData.value = Array.from(res);
         // 计算高度
-        nextTick(() => {
+        nextTick().then(() => {
           changeSuggestionsHeights();
         });
       })

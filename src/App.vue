@@ -90,7 +90,7 @@ const mainContextmenu = (event) => {
 
 // 加载完成事件
 const loadComplete = () => {
-  nextTick(() => {
+  nextTick().then(() => {
     $message.info(getGreeting() + "，" + welcomeText, {
       showIcon: false,
       duration: 3000,

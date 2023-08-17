@@ -41,8 +41,8 @@
         <n-form
           ref="customEngineRef"
           :rules="customEngineRules"
-          :label-width="80"
           :model="customEngineValue"
+          :label-width="80"
         >
           <n-form-item label="自定义搜索引擎地址" path="url">
             <n-input
@@ -131,8 +131,7 @@ const customEngineClick = () => {
 };
 
 // 自定义搜索引擎
-const setCustomEngine = (e) => {
-  e.preventDefault();
+const setCustomEngine = () => {
   customEngineRef.value?.validate((errors) => {
     if (!errors) {
       set.setSearchEngine(customEngineValue.value.url, true);

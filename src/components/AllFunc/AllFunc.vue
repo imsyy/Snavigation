@@ -1,6 +1,14 @@
 <template>
-  <!-- 一个盒子 -->
-  <div :class="status.mainBoxBig ? 'main-box big' : 'main-box'" @click.stop>
+  <!-- 功能区 -->
+  <div
+    :class="status.mainBoxBig ? 'main-box big' : 'main-box'"
+    @click.stop
+    @contextmenu.stop="
+      (e) => {
+        e.preventDefault();
+      }
+    "
+  >
     <Transition name="fade" mode="out-in">
       <AllBox v-if="status.siteStatus === 'box'" />
       <AllSet v-else-if="status.siteStatus === 'set'" />
@@ -28,7 +36,7 @@ const status = statusStore();
   border-radius: 8px;
   transition: opacity 0.3s, transform 0.3s, margin-top 0.3s, height 0.3s;
   z-index: 2;
-  .all {
+  .all-set {
     overflow: hidden;
     height: 100%;
     :deep(.scrollbar) {
@@ -81,6 +89,23 @@ const status = statusStore();
       }
       &:last-child {
         margin-bottom: 0;
+      }
+    }
+  }
+  .all-box {
+    overflow: hidden;
+    height: 100%;
+    :deep(.n-tab-pane) {
+      .scrollbar {
+        max-height: calc(460px - 84px);
+      }
+      .not-shortcut {
+        min-height: calc(460px - 84px);
+      }
+      &.no-padding {
+        .scrollbar {
+          max-height: calc(460px - 44px);
+        }
       }
     }
   }

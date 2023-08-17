@@ -1,0 +1,34 @@
+[
+  {
+    "name": "翻译",
+    "url": "@translation"
+  },
+  {
+    "name": "地图",
+    "url": "@map"
+  },
+  {
+    "name": "图片",
+    "url": "@picture"
+  },
+  {
+    "name": "云盘",
+    "url": "@cloud"
+  },
+  {
+    "name": "设置",
+    "url": "@setting"
+  },
+  {
+    "name": "邮箱",
+    "url": "https://mail.qq.com/"
+  },
+  {
+    "name": "哔哩哔哩",
+    "url": "https://mail.qq.com/"
+  },
+  {
+    "name": "GitHub",
+    "url": "https://mail.qq.com/"
+  }
+]

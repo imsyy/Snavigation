@@ -9,10 +9,14 @@ const useSetDataStore = defineStore("setData", {
       backgroundCustom: "",
       // 壁纸遮罩
       showBackgroundGray: true,
+      // 壁纸模糊
+      backgroundBlur: 0,
       // 搜索引擎
       searchEngine: "bing",
       lastSearchEngine: "bing",
       customEngineUrl: "",
+      // 搜索框收起
+      smallInput: false,
       // 清空搜索框
       showCleanInput: true,
       // 搜索框自动 focus
@@ -21,10 +25,16 @@ const useSetDataStore = defineStore("setData", {
       autoInputBlur: true,
       // 时间样式
       timeStyle: "one",
+      // 显示农历
+      showLunar: false,
       // 是否显秒
       showSeconds: false,
       // 是否显零
       showZeroTime: true,
+      // 12 小时制
+      use12HourFormat: false,
+      // 天气显示
+      showWeather: true,
       // 是否显示搜索建议
       showSuggestions: true,
       // 跳转方式

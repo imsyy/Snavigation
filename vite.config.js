@@ -53,7 +53,6 @@ export default defineConfig({
     viteCompression(),
   ],
   server: {
-    host: "0.0.0.0",
     port: 5588,
     open: true,
   },

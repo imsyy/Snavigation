@@ -9,6 +9,7 @@
         tabindex="0"
         id="main"
         :class="`main-${status.siteStatus}`"
+        :style="{ pointerEvents: mainClickable ? 'auto' : 'none' }"
         @click="status.setSiteStatus('normal')"
         @contextmenu="mainContextmenu"
         @keydown="mainPressKeyboard"
@@ -67,8 +68,8 @@
 </template>
 
 <script setup>
-import { nextTick } from "vue";
-import { statusStore } from "@/stores";
+import { onMounted, nextTick, watch, ref } from "vue";
+import { statusStore, setStore } from "@/stores";
 import { getGreeting } from "@/utils/timeTools";
 import Provider from "@/components/Provider.vue";
 import Cover from "@/components/Cover.vue";
@@ -77,7 +78,9 @@ import SearchInp from "@/components/SearchInput/SearchInp.vue";
 import AllFunc from "@/components/AllFunc/AllFunc.vue";
 import Footer from "@/components/Footer.vue";
 
+const set = setStore();
 const status = statusStore();
+const mainClickable = ref(false);
 
 // 获取配置
 const welcomeText = import.meta.env.VITE_WELCOME_TEXT ?? "欢迎访问本站";
@@ -91,6 +94,7 @@ const mainContextmenu = (event) => {
 // 加载完成事件
 const loadComplete = () => {
   nextTick().then(() => {
+    mainClickable.value = true;
     $message.info(getGreeting() + "，" + welcomeText, {
       showIcon: false,
       duration: 3000,
@@ -109,6 +113,23 @@ const mainPressKeyboard = (event) => {
     mainInput?.focus();
   }
 };
+
+// 根据主题类别更改
+const changeThemeType = (val) => {
+  const htmlElement = document.querySelector("html");
+  const themeType = val === "light" ? "light" : "dark";
+  htmlElement.setAttribute("theme", themeType);
+};
+
+// 监听颜色变化
+watch(
+  () => set.themeType,
+  (val) => changeThemeType(val)
+);
+
+onMounted(() => {
+  changeThemeType(set.themeType);
+});
 </script>
 
 <style lang="scss" scoped>

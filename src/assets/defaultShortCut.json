@@ -1,34 +1,42 @@
 [
   {
+    "id": 0,
     "name": "翻译",
-    "url": "@translation"
+    "url": "https://www.deepl.com/zh/translator"
   },
   {
+    "id": 1,
     "name": "地图",
-    "url": "@map"
+    "url": "https://ditu.amap.com/"
   },
   {
+    "id": 2,
     "name": "图片",
-    "url": "@picture"
+    "url": "https://www.pexels.com/zh-cn/"
   },
   {
+    "id": 3,
     "name": "云盘",
-    "url": "@cloud"
+    "url": "https://www.aliyundrive.com/drive/"
   },
   {
-    "name": "设置",
-    "url": "@setting"
+    "id": 4,
+    "name": "Cloudflare",
+    "url": "https://dash.cloudflare.com/"
   },
   {
+    "id": 5,
     "name": "邮箱",
     "url": "https://mail.qq.com/"
   },
   {
-    "name": "哔哩哔哩",
-    "url": "https://mail.qq.com/"
+    "id": 6,
+    "name": "GitHub",
+    "url": "https://github.com/"
   },
   {
-    "name": "GitHub",
-    "url": "https://mail.qq.com/"
+    "id": 7,
+    "name": "哔哩哔哩",
+    "url": "https://www.bilibili.com/"
   }
 ]

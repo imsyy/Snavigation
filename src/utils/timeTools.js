@@ -68,15 +68,17 @@ export const getGreeting = () => {
   const currentTime = new Date();
   const currentHour = currentTime.getHours();
   let greeting = "";
-  if (currentHour >= 5 && currentHour < 9) {
+  if (currentHour >= 6 && currentHour < 9) {
     greeting = "早上好";
   } else if (currentHour >= 9 && currentHour < 12) {
     greeting = "上午好";
   } else if (currentHour >= 12 && currentHour < 18) {
     greeting = "下午好";
-  } else if (currentHour >= 18 && currentHour < 24) {
+  } else if (currentHour >= 18 && currentHour < 20) {
+    greeting = "傍晚好";
+  } else if (currentHour >= 20 && currentHour < 24) {
     greeting = "晚上好";
-  } else if (currentHour >= 0 && currentHour < 5) {
+  } else if (currentHour >= 4 && currentHour < 6) {
     greeting = "凌晨好";
   } else {
     greeting = "夜深了";

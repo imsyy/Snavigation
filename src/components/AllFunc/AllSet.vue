@@ -3,7 +3,18 @@
     <n-tabs class="set" size="large" justify-content="space-evenly" animated>
       <n-tab-pane name="main" tab="基础设置">
         <n-scrollbar class="scrollbar">
-          <n-h6 prefix="bar"> 壁纸 </n-h6>
+          <n-h6 prefix="bar"> 主题与壁纸 </n-h6>
+          <n-card class="set-item">
+            <div class="name">
+              <span class="title">主题类别</span>
+              <span class="tip">切换全站主题类别</span>
+            </div>
+            <n-select
+              class="set"
+              v-model:value="themeType"
+              :options="themeTypeOptions"
+            />
+          </n-card>
           <n-card
             class="set-item cover"
             :content-style="{
@@ -280,6 +291,7 @@ import identifyInput from "@/utils/identifyInput";
 const set = setStore();
 const status = statusStore();
 const {
+  themeType,
   backgroundType,
   backgroundCustom,
   showBackgroundGray,
@@ -308,6 +320,18 @@ const backgroundTypeArr = [
   { name: "随机动漫", tip: "随机二次元图，随机更换" },
 ];
 
+// 主题类别
+const themeTypeOptions = [
+{
+    label: "浅色模式",
+    value: "light",
+  },
+  {
+    label: "深色模式",
+    value: "dark",
+  },
+];
+
 // 切换壁纸
 const changeBackground = (type, reset = false) => {
   if (reset) {
@@ -321,7 +345,7 @@ const changeBackground = (type, reset = false) => {
         $message.info("已恢复为默认壁纸，刷新后生效");
       },
     });
-    return;
+    return true;
   }
   backgroundType.value = type;
   $message.success(`已切换为${backgroundTypeArr[type].name}，刷新后生效`);

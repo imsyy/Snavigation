@@ -12,6 +12,12 @@
   --main-text-shadow: 0px 0px 8px #00000066;
 }
 
+[theme="dark"] {
+  --main-text-color: #efefef;
+  --main-background-light-color: #00000030;
+  --main-background-hover-color: #00000040;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -145,6 +151,7 @@ body {
 .n-dropdown {
   --n-border-radius: 8px !important;
   --n-color: var(--main-background-light-color) !important;
+  --n-option-color-hover: var(--main-background-hover-color) !important;
   backdrop-filter: blur(10px);
 }
 

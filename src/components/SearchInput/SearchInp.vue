@@ -20,13 +20,7 @@
       "
     />
     <!-- 主搜索框 -->
-    <div
-      class="all"
-      ref="searchAllRef"
-      :style="{ pointerEvents: inputClickable ? 'none' : 'auto' }"
-      @animationstart="inputClickable = true"
-      @animationend="inputAnimationEnd"
-    >
+    <div class="all" ref="searchAllRef" @animationend="inputAnimationEnd">
       <div class="engine" title="切换搜索引擎" @click="changeEngine">
         <Transition name="fade" mode="out-in">
           <SvgIcon
@@ -84,7 +78,6 @@ const inputTip = import.meta.env.VITE_INPUT_TIP ?? "想要搜点什么";
 // 搜索框数据
 const searchAllRef = ref(null);
 const searchInputRef = ref(null);
-const inputClickable = ref(true);
 
 // 搜索建议子组件
 const suggestionsRef = ref(null);
@@ -163,7 +156,6 @@ const toSearch = (val, type = 1) => {
 // 搜索框动画结束
 const inputAnimationEnd = () => {
   console.log("搜索框动画结束");
-  inputClickable.value = false;
   // 自动 focus
   if (set.autoFocus) {
     status.setSiteStatus("focus");

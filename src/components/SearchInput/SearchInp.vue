@@ -225,7 +225,6 @@ const changeEngine = () => {
       &::placeholder {
         width: 100%;
         text-align: center;
-        transform: translateY(1px);
         color: var(--main-text-color);
         letter-spacing: 2px;
         transition: opacity 0.3s;
@@ -251,7 +250,7 @@ const changeEngine = () => {
     }
   }
   &.small {
-    width: 240px;
+    width: 260px;
     .all {
       .engine,
       .go {
@@ -259,7 +258,7 @@ const changeEngine = () => {
       }
       .input {
         &::placeholder {
-          opacity: 0.3;
+          opacity: 0.6;
         }
       }
       &.focus {
@@ -270,7 +269,7 @@ const changeEngine = () => {
       }
     }
     &:hover {
-      width: calc(100% - 60px);
+      // width: calc(100% - 60px);
       .all {
         .input {
           &::placeholder {

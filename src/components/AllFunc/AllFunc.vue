@@ -28,7 +28,7 @@ const status = statusStore();
 .main-box {
   position: absolute;
   width: 80%;
-  height: 460px;
+  height: 64vh;
   max-width: 1200px;
   background-color: var(--main-background-light-color);
   backdrop-filter: blur(20px);
@@ -40,7 +40,8 @@ const status = statusStore();
     overflow: hidden;
     height: 100%;
     :deep(.scrollbar) {
-      max-height: calc(460px - 84px);
+      max-height: calc(64vh - 84px);
+      transition: max-height 0.3s;
     }
     :deep(.set-item) {
       width: 100%;
@@ -97,14 +98,14 @@ const status = statusStore();
     height: 100%;
     :deep(.n-tab-pane) {
       .scrollbar {
-        max-height: calc(460px - 84px);
+        max-height: calc(64vh - 84px);
       }
       .not-shortcut {
-        min-height: calc(460px - 84px);
+        min-height: calc(64vh - 84px);
       }
       &.no-padding {
         .scrollbar {
-          max-height: calc(460px - 44px);
+          max-height: calc(64vh - 44px);
         }
       }
     }
@@ -115,6 +116,9 @@ const status = statusStore();
     :deep(.scrollbar) {
       max-height: calc(80vh - 84px);
     }
+  }
+  @media (max-width: 478px) {
+    height: 60vh;
   }
 }
 </style>

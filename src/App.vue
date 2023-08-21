@@ -157,9 +157,12 @@ onMounted(() => {
   &.main-set {
     .main-box {
       opacity: 1;
-      margin-top: 220px;
+      margin-top: 20vh;
       transform: scale(1);
       visibility: visible;
+      @media (max-width: 478px) {
+        margin-top: 22vh;
+      }
     }
     .search-input {
       :deep(.all) {

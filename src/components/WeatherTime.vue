@@ -221,13 +221,19 @@ onBeforeUnmount(() => {
 
   &.focus {
     transform: translateY(-180px);
+    // transform: translateY(-24vh);
   }
   &.box,
   &.set {
-    transform: translateY(-220px);
+    // transform: translateY(-220px);
+    transform: translateY(-34vh);
+    @media (max-width: 478px) {
+      transform: translateY(-32vh);
+    }
   }
   &.hidden {
     transform: translateY(-180px);
+    // transform: translateY(-24vh);
     opacity: 0;
   }
   &.lunar {

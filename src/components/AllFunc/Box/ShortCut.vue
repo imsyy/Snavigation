@@ -6,7 +6,7 @@
         <n-grid
           class="all-shortcut"
           responsive="screen"
-          cols="3 s:4 m:5 l:6"
+          cols="2 s:3 m:4 l:5"
           :x-gap="10"
           :y-gap="10"
         >
@@ -70,7 +70,8 @@
       <n-form-item label="捷径名称" path="name">
         <n-input
           clearable
-          type="text"
+          show-count
+          maxlength="14"
           v-model:value="addShortcutValue.name"
           placeholder="请输入捷径名称"
         />
@@ -78,7 +79,6 @@
       <n-form-item label="站点链接" path="url">
         <n-input
           clearable
-          type="text"
           v-model:value="addShortcutValue.url"
           placeholder="请输入站点链接"
         />

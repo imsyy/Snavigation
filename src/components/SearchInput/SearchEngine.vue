@@ -47,7 +47,6 @@
           <n-form-item label="自定义搜索引擎地址" path="url">
             <n-input
               clearable
-              type="text"
               v-model:value="customEngineValue.url"
               placeholder="请输入自定义搜索引擎地址"
             />

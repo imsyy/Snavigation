@@ -1,5 +1,8 @@
 <template>
   <footer id="footer" @click.stop>
+    <div v-if="hitokotoShow" class="hitokoto">
+      {{ hitokotoData }}
+    </div>
     <div class="copyright">
       <span class="site-name">{{ siteName }}</span>
       <span class="year">{{ fullYear }}</span>
@@ -43,10 +46,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { setStore } from "@/stores";
 import { NModal, NButton, NSpace } from "naive-ui";
 import packageJson from "@/../package.json";
+import { getHitokoto } from "@/api";
 
 const set = setStore();
 
@@ -60,6 +64,10 @@ const fullYear = new Date().getFullYear();
 // 关于弹窗数据
 const aboutSiteModal = ref(false);
 
+// 一言显示 和 数据
+const hitokotoShow = ref(false);
+const hitokotoData = ref("");
+
 // 跳转
 const jumpTo = (url) => {
   if (set.urlJumpType === "href") {
@@ -68,12 +76,31 @@ const jumpTo = (url) => {
     window.open(url, "_blank");
   }
 };
+
+// 获取天气数据
+const getHitokotoData = () => {
+  getHitokoto()
+    .then((res) => {
+      hitokotoData.value = "[ " + res.hitokoto.substr(0, res.hitokoto.length - 1) + " ]";
+      hitokotoShow.value = true;
+    })
+    .catch((error) => {
+      console.error("一言获取失败：" + error);
+      $message.warning("一言获取失败", {
+        duration: 1500,
+      });
+    });
+};
+
+onMounted(() => {
+  // 获取一言数据
+  getHitokotoData();
+});
 </script>
 
 <style lang="scss" scoped>
 #footer {
   position: absolute;
-  display: flex;
   align-items: center;
   justify-content: center;
   bottom: 0;
@@ -81,9 +108,15 @@ const jumpTo = (url) => {
   width: 100%;
   color: var(--main-text-color);
   z-index: 1;
+  .hitokoto{
+    display: flex;
+    justify-content: center;
+    opacity: 0.6;
+  }
   .copyright {
     display: flex;
     align-items: center;
+    justify-content: center;
     font-size: 13px;
     span {
       margin: 0 2px;

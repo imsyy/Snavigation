@@ -34,3 +34,14 @@ export const getSearchSuggestions = async (keyWord) => {
     return null;
   }
 };
+
+/**
+ * 获取一言文案
+ * https://developer.hitokoto.cn/
+ */
+export const getHitokoto = () => {
+  return axios({
+    method: "GET",
+    url: "https://v1.hitokoto.cn",
+  });
+};

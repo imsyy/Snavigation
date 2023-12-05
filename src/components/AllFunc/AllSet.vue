@@ -9,11 +9,7 @@
               <span class="title">主题类别</span>
               <span class="tip">切换全站主题类别</span>
             </div>
-            <n-select
-              class="set"
-              v-model:value="themeType"
-              :options="themeTypeOptions"
-            />
+            <n-select class="set" v-model:value="themeType" :options="themeTypeOptions" />
           </n-card>
           <n-card
             class="set-item cover"
@@ -25,9 +21,7 @@
             <div class="desc">
               <div class="name">
                 <span class="title">壁纸偏好</span>
-                <span class="tip">
-                  除默认以外的其他选项可能会导致页面载入缓慢
-                </span>
+                <span class="tip"> 除默认以外的其他选项可能会导致页面载入缓慢 </span>
               </div>
               <n-space>
                 <Transition name="fade" mode="out-in">
@@ -96,11 +90,7 @@
               <span class="title">跳转方式</span>
               <span class="tip">全站链接跳转方式</span>
             </div>
-            <n-select
-              class="set"
-              v-model:value="urlJumpType"
-              :options="urlJumpTypeOptions"
-            />
+            <n-select class="set" v-model:value="urlJumpType" :options="urlJumpTypeOptions" />
           </n-card>
         </n-scrollbar>
       </n-tab-pane>
@@ -141,11 +131,7 @@
               <span class="title">时钟样式</span>
               <span class="tip">选择一种时钟样式</span>
             </div>
-            <n-select
-              class="set"
-              v-model:value="timeStyle"
-              :options="timeStyleOptions"
-            />
+            <n-select class="set" v-model:value="timeStyle" :options="timeStyleOptions" />
           </n-card>
           <n-card v-if="timeStyle === 'one'" class="set-item">
             <div class="name">
@@ -228,20 +214,13 @@
               accept=".json"
               @change="recoverSite"
             />
-            <n-button strong secondary @click="recoverRef?.click()">
-              恢复
-            </n-button>
+            <n-button strong secondary @click="recoverRef?.click()"> 恢复 </n-button>
           </n-card>
         </n-scrollbar>
       </n-tab-pane>
     </n-tabs>
     <!-- 自定义壁纸 -->
-    <n-modal
-      preset="card"
-      title="自定义壁纸"
-      v-model:show="customCoverModal"
-      :bordered="false"
-    >
+    <n-modal preset="card" title="自定义壁纸" v-model:show="customCoverModal" :bordered="false">
       <n-form>
         <n-form-item label="自定义壁纸链接">
           <n-input
@@ -254,9 +233,7 @@
       </n-form>
       <template #footer>
         <n-space justify="end">
-          <n-button strong secondary @click="customCoverModal = false">
-            取消
-          </n-button>
+          <n-button strong secondary @click="customCoverModal = false"> 取消 </n-button>
           <n-button strong secondary @click="setCustomCover"> 确认 </n-button>
         </n-space>
       </template>
@@ -322,7 +299,7 @@ const backgroundTypeArr = [
 
 // 主题类别
 const themeTypeOptions = [
-{
+  {
     label: "浅色模式",
     value: "light",
   },
@@ -486,7 +463,9 @@ onMounted(() => {
     justify-content: center;
     border-radius: 8px;
     background-color: var(--main-background-light-color);
-    transition: background-color 0.3s, box-shadow 0.3s;
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s;
     &.check {
       background-color: var(--main-background-hover-color);
       &::before {

@@ -18,11 +18,7 @@
           @after-enter="changeSuggestionsHeights"
           @after-leave="changeSuggestionsHeights"
         >
-          <div
-            v-if="searchKeyword !== null"
-            class="special-result"
-            ref="specialallResultsRef"
-          >
+          <div v-if="searchKeyword !== null" class="special-result" ref="specialallResultsRef">
             <!-- 快捷翻译 -->
             <div
               v-if="searchKeywordType === 'text'"
@@ -36,19 +32,11 @@
             <div
               v-if="searchKeywordType !== 'text'"
               class="s-result"
-              @click.stop="
-                toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)
-              "
+              @click.stop="toSearch(searchKeyword, searchKeywordType === 'email' ? 3 : 4)"
             >
-              <SvgIcon
-                :iconName="`icon-${
-                  searchKeywordType === 'email' ? 'email' : 'link'
-                }`"
-              />
+              <SvgIcon :iconName="`icon-${searchKeywordType === 'email' ? 'email' : 'link'}`" />
               <span class="text">
-                {{
-                  searchKeywordType === "email" ? "发送邮件至" : "直接访问"
-                }}：{{ searchKeyword }}
+                {{ searchKeywordType === "email" ? "发送邮件至" : "直接访问" }}：{{ searchKeyword }}
               </span>
             </div>
           </div>
@@ -157,29 +145,22 @@ const keyboardEvents = (keyCode, event) => {
       // 阻止默认事件
       event.preventDefault();
       if (mainInput && allResultsRef.value && searchSuggestionsData.value[0]) {
-        const suggestionItems =
-          allResultsRef.value.querySelectorAll(".s-result");
+        const suggestionItems = allResultsRef.value.querySelectorAll(".s-result");
         if (suggestionItems.length > 0) {
           // 获取当前已聚焦的元素
           const focusedItem = document.querySelector(".s-result.focus");
           // 确定当前聚焦的元素在列表中的索引
           const currentIndex = Array.from(suggestionItems).indexOf(focusedItem);
           // 移除所有元素的选中状态
-          suggestionItems.forEach((item) =>
-            item.classList.toggle("focus", false)
-          );
+          suggestionItems.forEach((item) => item.classList.toggle("focus", false));
           // 计算下一个要聚焦的元素的索引
           let nextIndex = keyCode === 38 ? currentIndex - 1 : currentIndex + 1;
           // 确保索引不越界
-          nextIndex = Math.max(
-            0,
-            Math.min(nextIndex, suggestionItems.length - 1)
-          );
+          nextIndex = Math.max(0, Math.min(nextIndex, suggestionItems.length - 1));
           // 操作元素
           if (nextIndex !== -1) {
             suggestionItems[nextIndex].classList.toggle("focus", true);
-            mainInput.value =
-              suggestionItems[nextIndex].querySelector(".text").textContent;
+            mainInput.value = suggestionItems[nextIndex].querySelector(".text").textContent;
           }
         }
       }
@@ -199,8 +180,7 @@ const changeSuggestionsHeights = () => {
   try {
     const allResultsHeight = allResultsRef.value?.offsetHeight;
     const specialallResultsHeight = specialallResultsRef.value?.offsetHeight;
-    suggestionsHeights.value =
-      (specialallResultsHeight || 0) + (allResultsHeight || 0);
+    suggestionsHeights.value = (specialallResultsHeight || 0) + (allResultsHeight || 0);
   } catch (error) {
     console.error("计算高度时出现错误：" + error);
   }
@@ -223,7 +203,7 @@ watch(
       // 调用搜索结果
       keywordsSearch(val);
     }
-  }
+  },
 );
 
 // 暴露方法
@@ -242,7 +222,10 @@ defineExpose({ keyboardEvents });
   background-color: var(--main-background-light-color);
   backdrop-filter: blur(30px) saturate(1.25);
   border-radius: 16px;
-  transition: height 0.2s ease, opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    height 0.2s ease,
+    opacity 0.3s ease,
+    transform 0.3s ease;
   z-index: 1;
 
   .all-result,
@@ -255,7 +238,9 @@ defineExpose({ keyboardEvents });
       align-items: center;
       padding: 6px 12px;
       font-size: 14px;
-      transition: background-color 0.3s, padding-left 0.3s;
+      transition:
+        background-color 0.3s,
+        padding-left 0.3s;
       .i-icon {
         opacity: 0.8;
         margin-right: 8px;

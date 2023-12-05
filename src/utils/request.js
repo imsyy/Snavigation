@@ -13,7 +13,7 @@ axios.interceptors.request.use(
   (error) => {
     console.error("请求失败，请稍后重试");
     return Promise.reject(error);
-  }
+  },
 );
 
 // 响应拦截
@@ -29,7 +29,7 @@ axios.interceptors.response.use(
       console.error("请求失败，请稍后重试:" + error);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axios;

@@ -2,13 +2,7 @@
   <Transition name="fadeDown" mode="out-in">
     <div v-if="status.engineChangeStatus" class="engine-choose">
       <n-scrollbar style="max-height: 44.5vh">
-        <n-grid
-          class="all-engine"
-          responsive="screen"
-          cols="2 s:3 m:4 l:4"
-          :x-gap="10"
-          :y-gap="10"
-        >
+        <n-grid class="all-engine" responsive="screen" cols="2 s:3 m:4 l:4" :x-gap="10" :y-gap="10">
           <n-grid-item
             v-for="(item, key) in defaultEngine"
             :key="key"
@@ -54,12 +48,8 @@
         </n-form>
         <template #footer>
           <n-space justify="end">
-            <n-button strong secondary @click="customEngineModal = false">
-              取消
-            </n-button>
-            <n-button strong secondary @click="setCustomEngine">
-              确认
-            </n-button>
+            <n-button strong secondary @click="customEngineModal = false"> 取消 </n-button>
+            <n-button strong secondary @click="setCustomEngine"> 确认 </n-button>
           </n-space>
         </template>
       </n-modal>
@@ -98,9 +88,7 @@ const customEngineRules = {
     validator(rule, value) {
       if (!value) {
         return new Error("请输入自定义搜索引擎地址");
-      } else if (
-        !/^https:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?$/.test(value)
-      ) {
+      } else if (!/^https:\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,}(\/\S*)?$/.test(value)) {
         return new Error("请检查是否为网址且是否为 https:// 开头");
       }
       return true;
@@ -171,7 +159,9 @@ const setCustomEngine = () => {
       border-radius: 10px;
       box-sizing: border-box;
       background-color: var(--main-background-light-color);
-      transition: background-color 0.3s, box-shadow 0.3s;
+      transition:
+        background-color 0.3s,
+        box-shadow 0.3s;
       .i-icon {
         margin-right: 12px;
       }

@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write src/",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -19,7 +21,10 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.55.0",
+    "eslint-plugin-vue": "^9.19.2",
     "naive-ui": "^2.34.4",
+    "prettier": "^3.1.0",
     "terser": "^5.19.2",
     "vite": "^4.4.5",
     "vite-plugin-compression": "^0.5.1",

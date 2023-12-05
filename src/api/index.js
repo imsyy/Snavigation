@@ -25,7 +25,7 @@ export const getSearchSuggestions = async (keyWord) => {
       {
         // 回调参数
         jsonpCallback: "cb",
-      }
+      },
     );
     const data = await response.json();
     return data.s;

@@ -34,7 +34,11 @@ const status = statusStore();
   backdrop-filter: blur(20px);
   color: var(--main-text-color);
   border-radius: 8px;
-  transition: opacity 0.3s, transform 0.3s, margin-top 0.3s, height 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s,
+    margin-top 0.3s,
+    height 0.3s;
   z-index: 2;
   .all-set {
     overflow: hidden;

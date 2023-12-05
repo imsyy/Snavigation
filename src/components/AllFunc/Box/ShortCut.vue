@@ -77,11 +77,7 @@
         />
       </n-form-item>
       <n-form-item label="站点链接" path="url">
-        <n-input
-          clearable
-          v-model:value="addShortcutValue.url"
-          placeholder="请输入站点链接"
-        />
+        <n-input clearable v-model:value="addShortcutValue.url" placeholder="请输入站点链接" />
       </n-form-item>
     </n-form>
     <template #footer>
@@ -232,8 +228,7 @@ const addOrEditShortcuts = () => {
       // 是否重复
       const isDuplicate = shortcutData.value?.some(
         (item) =>
-          item.name === addShortcutValue.value.name ||
-          item.url === addShortcutValue.value.url
+          item.name === addShortcutValue.value.name || item.url === addShortcutValue.value.url,
       );
       if (isDuplicate) {
         $message.error("新增名称或链接与已有捷径重复");
@@ -249,9 +244,7 @@ const addOrEditShortcuts = () => {
       return true;
     } else {
       // 编辑捷径
-      const index = shortcutData.value.findIndex(
-        (item) => item.id === addShortcutValue.value.id
-      );
+      const index = shortcutData.value.findIndex((item) => item.id === addShortcutValue.value.id);
       if (index === -1) {
         $message.error("捷径中不存在该项，请重试");
         return false;
@@ -269,9 +262,7 @@ const addOrEditShortcuts = () => {
 const delShortcuts = () => {
   const deleteId = addShortcutValue.value.id;
   if (typeof deleteId === "number") {
-    const indexToRemove = shortcutData.value.findIndex(
-      (item) => item.id === deleteId
-    );
+    const indexToRemove = shortcutData.value.findIndex((item) => item.id === deleteId);
     if (indexToRemove !== -1) {
       shortcutData.value.splice(indexToRemove, 1);
       // 将后续元素的 id 前移一位
@@ -355,7 +346,9 @@ const shortCutJump = (url) => {
       background-color: var(--main-background-light-color);
       border-radius: 8px;
       font-size: 16px;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      transition:
+        background-color 0.3s,
+        box-shadow 0.3s;
       .i-icon {
         width: 1rem;
         margin-right: 6px;

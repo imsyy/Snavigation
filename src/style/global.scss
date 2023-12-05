@@ -168,7 +168,9 @@ body {
 
 .fadeDown-enter-active,
 .fadeDown-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .fadeDown-enter-active {
@@ -183,7 +185,9 @@ body {
 
 .show-enter-active,
 .show-leave-active {
-  transition: opacity 0.25s ease, transform 0.25s ease-in-out;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease-in-out;
 }
 
 .show-enter-from,

@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { defineComponent } from "vue";
+import { defineComponent, h } from "vue";
 import {
   zhCN,
   dateZhCN,
@@ -60,6 +60,8 @@ const NaiveProviderContent = defineComponent({
   setup() {
     setupNaiveTools();
   },
-  render() {},
+  render() {
+    return h("div", { className: "main-tools" });
+  },
 });
 </script>

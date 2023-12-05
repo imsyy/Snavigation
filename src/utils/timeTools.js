@@ -30,7 +30,7 @@ export const getCurrentTime = (ShowZero = true, Use12Hour = false) => {
     const lunar = LunarCalendar.solarToLunar(
       time.getFullYear(),
       time.getMonth() + 1,
-      time.getDate()
+      time.getDate(),
     );
     // 返回时间
     const currentTime = {

@@ -1,5 +1,5 @@
 <template>
-  <n-tabs class="all-box" size="large" justify-content="space-evenly" animated >
+  <n-tabs class="all-box" size="large" justify-content="space-evenly" animated>
     <n-tab-pane class="no-padding" name="link" tab="捷径">
       <ShortCut />
     </n-tab-pane>

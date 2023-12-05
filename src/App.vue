@@ -22,9 +22,7 @@
         <Transition name="fade">
           <div
             class="all-controls"
-            v-show="
-              status.siteStatus !== 'focus' && status.siteStatus !== 'normal'
-            "
+            v-show="status.siteStatus !== 'focus' && status.siteStatus !== 'normal'"
           >
             <div
               class="change-status"
@@ -41,17 +39,11 @@
             <div
               class="change-status"
               :title="status.siteStatus !== 'set' ? '设置' : '首页'"
-              @click.stop="
-                status.setSiteStatus(
-                  status.siteStatus !== 'set' ? 'set' : 'normal'
-                )
-              "
+              @click.stop="status.setSiteStatus(status.siteStatus !== 'set' ? 'set' : 'normal')"
             >
               <Transition name="fade" mode="out-in">
                 <SvgIcon
-                  :iconName="`icon-${
-                    status.siteStatus !== 'set' ? 'setting' : 'home'
-                  }`"
+                  :iconName="`icon-${status.siteStatus !== 'set' ? 'setting' : 'home'}`"
                   :key="status.siteStatus !== 'set' ? 'setting' : 'home'"
                 />
               </Transition>
@@ -124,7 +116,7 @@ const changeThemeType = (val) => {
 // 监听颜色变化
 watch(
   () => set.themeType,
-  (val) => changeThemeType(val)
+  (val) => changeThemeType(val),
 );
 
 onMounted(() => {
@@ -192,7 +184,10 @@ onMounted(() => {
       border-radius: 8px;
       color: var(--main-text-color);
       z-index: 1;
-      transition: opacity 0.3s, background-color 0.3s, transform 0.3s;
+      transition:
+        opacity 0.3s,
+        background-color 0.3s,
+        transform 0.3s;
       &:hover {
         backdrop-filter: blur(20px);
         background-color: var(--main-background-light-color);

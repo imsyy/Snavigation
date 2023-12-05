@@ -4,9 +4,7 @@
     :class="[
       'weather-time',
       status.siteStatus,
-      status.mainBoxBig &&
-      status.siteStatus !== 'normal' &&
-      status.siteStatus !== 'focus'
+      status.mainBoxBig && status.siteStatus !== 'normal' && status.siteStatus !== 'focus'
         ? 'hidden'
         : null,
       set.showLunar ? 'lunar' : null,
@@ -18,9 +16,7 @@
       class="time"
       @click.stop="
         status.setSiteStatus(
-          status.siteStatus !== 'normal' && status.siteStatus !== 'focus'
-            ? 'normal'
-            : 'box'
+          status.siteStatus !== 'normal' && status.siteStatus !== 'focus' ? 'normal' : 'box',
         )
       "
     >
@@ -50,9 +46,7 @@
       <span class="status">{{ weatherData.condition ?? "N/A" }}</span>
       <span class="temperature">{{ weatherData.temp ?? "N/A" }} ℃</span>
       <span class="wind">{{ weatherData.windDir ?? "N/A" }}</span>
-      <span v-if="weatherData.windLevel" class="wind-level">
-        {{ weatherData.windLevel }} 级
-      </span>
+      <span v-if="weatherData.windLevel" class="wind-level"> {{ weatherData.windLevel }} 级 </span>
     </div>
   </div>
 </template>
@@ -101,10 +95,7 @@ const getWeatherData = () => {
           lastFetchTime: currentTime,
         };
         // 将新的天气数据和时间戳存储到 localStorage 中
-        localStorage.setItem(
-          "lastWeatherData",
-          JSON.stringify(lastWeatherData)
-        );
+        localStorage.setItem("lastWeatherData", JSON.stringify(lastWeatherData));
       })
       .catch((error) => {
         console.error("天气获取失败：" + error);
@@ -124,7 +115,7 @@ watch(
   () => [set.showZeroTime, set.use12HourFormat],
   () => {
     updateTimeData();
-  }
+  },
 );
 
 onMounted(() => {
@@ -150,7 +141,10 @@ onBeforeUnmount(() => {
   transform: translateY(-140px);
   color: var(--main-text-color);
   animation: fade-time-in 0.6s cubic-bezier(0.21, 0.78, 0.36, 1);
-  transition: transform 0.3s, opacity 0.5s, margin-bottom 0.3s;
+  transition:
+    transform 0.3s,
+    opacity 0.5s,
+    margin-bottom 0.3s;
   z-index: 1;
   .time {
     cursor: pointer;

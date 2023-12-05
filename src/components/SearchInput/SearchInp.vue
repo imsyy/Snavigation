@@ -25,9 +25,7 @@
         <Transition name="fade" mode="out-in">
           <SvgIcon
             :iconName="`icon-${
-              set.searchEngine !== 'custom'
-                ? defaultEngine[set.searchEngine]?.icon
-                : 'custom'
+              set.searchEngine !== 'custom' ? defaultEngine[set.searchEngine]?.icon : 'custom'
             }`"
             :key="set.searchEngine"
           />
@@ -54,11 +52,7 @@
     <!-- 搜索引擎切换 -->
     <SearchEngine />
     <!-- 搜索建议 -->
-    <Suggestions
-      ref="suggestionsRef"
-      :keyWord="status.searchInputValue"
-      @toSearch="toSearch"
-    />
+    <Suggestions ref="suggestionsRef" :keyWord="status.searchInputValue" @toSearch="toSearch" />
   </div>
 </template>
 
@@ -120,26 +114,26 @@ const toSearch = (val, type = 1) => {
         }
         break;
       // 快捷翻译
-      case 2:
+      case 2: {
         const hasTranslation = defaultEngine[set.searchEngine]?.translation;
         jumpLink(
           hasTranslation
             ? hasTranslation + searchFormat
-            : `https://fanyi.baidu.com/#en/zh/${searchFormat}`
+            : `https://fanyi.baidu.com/#en/zh/${searchFormat}`,
         );
         break;
+      }
       // 电子邮件
       case 3:
         jumpLink(`mailto:${searchFormat}`);
         break;
       // 直接访问
-      case 4:
+      case 4: {
         const urlRegex = /^(https?:\/\/)/i;
-        const url = urlRegex.test(searchFormat)
-          ? searchFormat
-          : `//${searchFormat}`;
+        const url = urlRegex.test(searchFormat) ? searchFormat : `//${searchFormat}`;
         jumpLink(url);
         break;
+      }
       default:
         break;
     }
@@ -208,7 +202,10 @@ const changeEngine = () => {
     backdrop-filter: blur(10px);
     opacity: 1;
     animation: fade-up-in 0.7s cubic-bezier(0.37, 0.99, 0.36, 1);
-    transition: transform 0.3s, background-color 0.3s, opacity 0.5s;
+    transition:
+      transform 0.3s,
+      background-color 0.3s,
+      opacity 0.5s;
     z-index: 1;
     .input {
       display: flex;
@@ -240,7 +237,9 @@ const changeEngine = () => {
       width: 64px;
       font-size: 20px;
       border-radius: 30px;
-      transition: background-color 0.3s, opacity 0.3s;
+      transition:
+        background-color 0.3s,
+        opacity 0.3s;
       &:hover {
         background-color: var(--main-background-color);
       }

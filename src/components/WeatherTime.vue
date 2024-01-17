@@ -42,11 +42,11 @@
       <span class="day">{{ timeData.day ?? "0" }}</span>
       <span class="weekday">{{ timeData.weekday ?? "星期八" }}</span>
     </div>
-    <div v-if="weatherShow && set.showWeather" class="weather">
-      <span class="status">{{ weatherData.condition ?? "N/A" }}</span>
-      <span class="temperature">{{ weatherData.temp ?? "N/A" }} ℃</span>
-      <span class="wind">{{ weatherData.windDir ?? "N/A" }}</span>
-      <span v-if="weatherData.windLevel" class="wind-level"> {{ weatherData.windLevel }} 级 </span>
+    <div v-if="set.showWeather" class="weather">
+      <span class="status">{{ weatherData?.condition ?? "N/A" }}</span>
+      <span class="temperature">{{ weatherData?.temp ?? "N/A" }} ℃</span>
+      <span class="wind">{{ weatherData?.windDir ?? "N/A" }}</span>
+      <span v-if="weatherData?.windLevel" class="wind-level"> {{ weatherData.windLevel }} 级 </span>
     </div>
   </div>
 </template>
@@ -55,7 +55,7 @@
 import { getCurrentTime } from "@/utils/timeTools";
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { statusStore, setStore } from "@/stores";
-import { getWeather } from "@/api";
+import { getAdcode, getWeather } from "@/api";
 
 const set = setStore();
 const status = statusStore();
@@ -65,8 +65,8 @@ const timeData = ref({});
 const timeInterval = ref(null);
 
 // 天气数据
-const weatherShow = ref(true);
-const weatherData = ref({});
+const weatherData = ref(null);
+const weatherKey = import.meta.env.VITE_WEATHER_KEY;
 
 // 更新时间
 const updateTimeData = () => {
@@ -74,7 +74,10 @@ const updateTimeData = () => {
 };
 
 // 获取天气数据
-const getWeatherData = () => {
+const getWeatherData = async () => {
+  if (!weatherKey) {
+    return $message.warning("请配置天气 Key");
+  }
   // 当前时间戳
   const currentTime = Date.now();
   // 上次获取天气数据的数据
@@ -84,28 +87,29 @@ const getWeatherData = () => {
   };
   // 上次获取天气数据的时间戳与当前时间的时间差（毫秒）
   const timeDifference = currentTime - lastWeatherData.lastFetchTime;
-  // 是否超出 2 分钟
-  if (timeDifference >= 2 * 60 * 1000) {
-    getWeather()
-      .then((res) => {
-        console.log(res);
-        weatherData.value = res.result.condition;
-        lastWeatherData = {
-          data: res.result.condition,
-          lastFetchTime: currentTime,
-        };
-        // 将新的天气数据和时间戳存储到 localStorage 中
-        localStorage.setItem("lastWeatherData", JSON.stringify(lastWeatherData));
-      })
-      .catch((error) => {
-        console.error("天气获取失败：" + error);
-        $message.warning("天气获取失败", {
-          duration: 1500,
-        });
-        weatherShow.value = false;
-      });
+  // 是否超出 5 分钟
+  if (timeDifference >= 5 * 60 * 1000) {
+    const adCodeResult = await getAdcode(weatherKey);
+    if (adCodeResult.infocode !== "10000") {
+      return $message.error("地区查询失败");
+    }
+    // 获取天气数据
+    const weatherResult = await getWeather(weatherKey, adCodeResult.adcode);
+    if (weatherResult.infocode !== "10000") {
+      return $message.error("地区查询失败");
+    }
+    const data = weatherResult.lives[0];
+    weatherData.value = {
+      condition: data.weather,
+      temp: data.temperature,
+      windDir: data.winddirection + "风",
+      windLevel: data.windpower,
+    };
+    lastWeatherData = { data: weatherData.value, lastFetchTime: currentTime };
+    // 储存新天气数据
+    localStorage.setItem("lastWeatherData", JSON.stringify(lastWeatherData));
   } else {
-    console.log("从缓存中读取天气数据");
+    console.log("从缓存中读取天气数据：", lastWeatherData);
     weatherData.value = lastWeatherData.data;
   }
 };

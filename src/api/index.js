@@ -3,12 +3,23 @@ import fetchJsonp from "fetch-jsonp";
 
 /**
  * 获取天气
- * https://api.oioweb.cn/doc/weather/GetWeather
+ * https://lbs.amap.com/api/webservice/guide/api/weatherinfo
  */
-export const getWeather = () => {
+// 获取高德地理位置信息
+export const getAdcode = async (key) => {
   return axios({
     method: "GET",
-    url: "https://api.oioweb.cn/api/weather/GetWeather",
+    url: "https://restapi.amap.com/v3/ip",
+    params: { key },
+  });
+};
+
+// 获取高德地理天气信息
+export const getWeather = async (key, city) => {
+  return axios({
+    method: "GET",
+    url: "https://restapi.amap.com/v3/weather/weatherInfo",
+    params: { key, city, extensions: "base" },
   });
 };
 

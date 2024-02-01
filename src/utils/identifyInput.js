@@ -9,10 +9,8 @@ const identifyInput = (input) => {
    * 网址正则
    * @type {RegExp}
    */
-  const urlRegex = new RegExp(
-    "^(http://www.|https://www.|http://|https://)?[a-z0-9]+([-.]{1}[a-z0-9]+)*.[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$",
-  );
-  
+  const urlRegex = new RegExp("https?://[\\w.-]+", "i");
+
   /**
    * IP 正则
    * @type {RegExp}
